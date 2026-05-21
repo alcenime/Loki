@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=750, initial-scale=1.0">
+<title>Wolf Hunter - Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #e8c96a;
+    --gold-light: #f5dfa0;
+    --gold-dark: #b8962a;
+    --blue-deep: #0a1628;
+    --blue-mid: #112240;
+    --blue-bright: #1e4080;
+    --blue-sky: #4a90d9;
+    --blue-glow: #6ab4ff;
+    --silver: #c8d8ee;
+    --white: #f0f4ff;
+    --red-alert: #e84040;
+    --purple-gem: #7b5ea7;
+    --gem-blue: #4a9eff;
+    --panel-bg: rgba(10, 22, 50, 0.85);
+    --panel-border: rgba(232, 201, 106, 0.3);
+    --sidebar-w: 200px;
+    --topbar-h: 64px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 100vw;
+    height: 750px;
+    overflow: hidden;
+    background: #0a1628 url('assets/dashboard/backgroundloki.png') center center / cover no-repeat;
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--white);
+    position: relative;
+  }
+
+
+
+  /* ─── LAYOUT ─── */
+  .wrapper {
+    position: relative; z-index: 2;
+    width: 100%; height: 750px;
+    display: flex; flex-direction: row;
+  }
+
+  .center-col {
+    flex: 1; display: flex; flex-direction: column;
+    overflow: hidden; min-width: 0;
+  }
+
+  /* ─── TOPBAR ─── */
+  .topbar {
+    height: var(--topbar-h);
+    background: linear-gradient(180deg, rgba(5,12,30,0.95) 0%, rgba(10,22,50,0.85) 100%);
+    border-bottom: 1px solid rgba(232,201,106,0.25);
+    display: flex; align-items: center;
+    padding: 0 12px; gap: 8px;
+    flex-shrink: 0;
+    backdrop-filter: blur(6px);
+  }
+
+  .profile-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #4a7ab5, #1a3060);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 0 12px rgba(106,180,255,0.4);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .profile-info { flex-shrink: 0; }
+  .profile-name {
+    font-family: 'Cinzel', serif;
+    font-size: 13px; font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+  }
+  .profile-level {
+    font-size: 11px; color: var(--silver);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .xp-bar {
+    width: 80px; height: 3px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px; overflow: hidden;
+    display: inline-block; vertical-align: middle;
+  }
+  .xp-fill {
+    height: 100%; width: 67%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+    border-radius: 2px;
+  }
+
+  .compass-icon {
+    width: 28px; height: 28px;
+    margin: 0 6px;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  .top-spacer { flex: 1; }
+
+  .currency-group {
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .currency-pill {
+    display: flex; align-items: center; gap: 4px;
+    background: rgba(5,12,30,0.7);
+    border: 1px solid rgba(232,201,106,0.25);
+    border-radius: 20px;
+    padding: 4px 8px 4px 6px;
+    font-size: 12px; font-weight: 600;
+    color: var(--white);
+  }
+  .currency-pill .icon { font-size: 14px; }
+  .currency-pill .plus-btn {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--blue-deep);
+    font-size: 11px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+    margin-left: 2px;
+  }
+
+  .energy-pill {
+    display: flex; align-items: center; gap: 4px;
+    background: rgba(5,12,30,0.7);
+    border: 1px solid rgba(106,180,255,0.3);
+    border-radius: 20px;
+    padding: 4px 8px 4px 6px;
+    font-size: 12px; font-weight: 600;
+  }
+  .energy-icon { color: #a060ff; font-size: 14px; }
+
+  .top-actions {
+    display: flex; align-items: center; gap: 6px;
+    margin-left: 4px;
+  }
+  .top-action-btn {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; cursor: pointer;
+    opacity: 0.8;
+    position: relative;
+  }
+  .notif-badge {
+    position: absolute; top: -2px; right: -2px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--red-alert);
+    border: 1px solid var(--blue-deep);
+    font-size: 7px; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: white;
+  }
+
+  /* ─── BODY ─── */
+  .body-row {
+    flex: 1; overflow: hidden;
+    display: flex;
+  }
+
+  /* Sidebar profile block */
+  .sidebar-profile {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 10px 10px;
+    border-bottom: 1px solid rgba(232,201,106,0.2);
+    flex-shrink: 0;
+  }
+  .sidebar-profile .profile-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #4a7ab5, #1a3060);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 0 10px rgba(106,180,255,0.4);
+    flex-shrink: 0;
+  }
+  .sidebar-profile .profile-name {
+    font-family: 'Cinzel', serif;
+    font-size: 11px; font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.4px;
+    line-height: 1.2;
+  }
+  .sidebar-profile .profile-level {
+    font-size: 10px; color: var(--silver);
+    display: flex; align-items: center; gap: 3px;
+    margin-top: 2px;
+  }
+  .sidebar-profile .xp-bar {
+    width: 50px; height: 3px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px; overflow: hidden;
+    display: inline-block; vertical-align: middle;
+  }
+  .sidebar-profile .xp-fill {
+    height: 100%; width: 67%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+    border-radius: 2px;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: linear-gradient(180deg,
+      rgba(8,18,42,0.97) 0%,
+      rgba(12,24,52,0.95) 60%,
+      rgba(8,18,42,0.97) 100%
+    );
+    border-right: 1px solid rgba(232,201,106,0.2);
+    flex-shrink: 0;
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Sidebar gold line accent */
+  .sidebar::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 1px; height: 100%;
+    background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(232,201,106,0.5) 30%,
+      rgba(232,201,106,0.5) 70%,
+      transparent 100%
+    );
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 8px 0;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 14px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s;
+    border-radius: 0 4px 4px 0;
+    margin-right: 4px;
+  }
+  .nav-item:hover { background: rgba(232,201,106,0.08); }
+  .nav-item.active {
+    background: rgba(232,201,106,0.12);
+  }
+  .nav-item.active::before {
+    content: '';
+    position: absolute; left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 3px; height: 60%;
+    background: var(--gold);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .nav-icon {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    background: rgba(255,255,255,0.06);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .nav-icon img {
+    width: 20px; height: 20px;
+    object-fit: contain;
+    filter: brightness(0.75);
+  }
+  .nav-item.active .nav-icon img {
+    filter: brightness(1) drop-shadow(0 0 4px rgba(232,201,106,0.6));
+  }
+  .nav-item.active .nav-icon {
+    background: rgba(232,201,106,0.15);
+  }
+
+  .nav-label {
+    font-family: 'Cinzel', serif;
+    font-size: 12px; font-weight: 600;
+    color: var(--silver);
+    letter-spacing: 0.3px;
+  }
+  .nav-item.active .nav-label { color: var(--gold-light); }
+  .nav-item.locked .nav-label { color: rgba(180,200,220,0.4); }
+  .nav-item.locked .nav-icon { opacity: 0.4; }
+
+  .nav-badge {
+    margin-left: auto;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--red-alert);
+    font-size: 9px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+  }
+
+  .lock-icon {
+    margin-left: auto;
+    font-size: 12px;
+    opacity: 0.4;
+  }
+
+  /* Sidebar wolf portrait */
+  .sidebar-portrait {
+    width: 100%;
+    padding: 10px;
+    border-top: 1px solid rgba(232,201,106,0.15);
+  }
+  .wolf-medallion {
+    width: 120px; height: 120px;
+    margin: 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .wolf-medallion::after { display: none; }
+
+  /* ─── MAIN CONTENT ─── */
+  .main-content {
+    flex: 1;
+    display: flex; flex-direction: column;
+    gap: 6px;
+    padding: 8px 8px 8px;
+    overflow: hidden;
+  }
+
+  /* Each row in the content area */
+  .content-row {
+    display: flex; gap: 6px;
+    min-height: 0;
+  }
+  .content-row.row-hero { flex: 2.2; }
+  .content-row.row-events { flex: 1.6; }
+  .content-row.row-eclipse { flex: 1.4; }
+
+  /* Full-width banners (row 1 & 3) */
+  .quest-banner {
+    flex: 1;
+    border-radius: 10px;
+    border: 1px solid rgba(232,201,106,0.3);
+    background: linear-gradient(135deg,
+      rgba(10,22,50,0.9) 0%,
+      rgba(20,40,90,0.85) 50%,
+      rgba(10,22,50,0.9) 100%
+    );
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  /* Row 2 main card (left, big) */
+  .row-main-card {
+    flex: 1;
+    border-radius: 8px;
+    border: 1px solid rgba(232,201,106,0.25);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    min-height: 0;
+  }
+  .row-main-card:hover { border-color: rgba(232,201,106,0.5); }
+
+  /* Row 2 side stack (right, 3 cards stacked) */
+  .row-side-stack {
+    width: 150px;
+    display: flex; flex-direction: column; gap: 5px;
+    flex-shrink: 0;
+  }
+  .event-side-card {
+    flex: 1;
+    border-radius: 7px;
+    border: 1px solid rgba(232,201,106,0.2);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+  }
+  .event-side-card:hover { border-color: rgba(232,201,106,0.5); }
+  .event-side-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Eclipse banner (row 3) */
+  .eclipse-banner {
+    flex: 1;
+    border-radius: 10px;
+    border: 1px solid rgba(120,50,200,0.5);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    display: flex; align-items: stretch;
+  }
+  .eclipse-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #0a0820 0%, #1a0840 40%, #0d0520 100%);
+  }
+  .eclipse-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg,
+      rgba(8,4,24,0.85) 0%,
+      rgba(8,4,24,0.3) 50%,
+      transparent 100%
+    );
+    z-index: 2;
+  }
+  .eclipse-content {
+    position: relative; z-index: 3;
+    padding: 10px 14px;
+    display: flex; flex-direction: column; justify-content: center;
+    flex-shrink: 0;
+  }
+  .eclipse-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px; font-weight: 600;
+    color: rgba(200,160,255,0.7);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .eclipse-title {
+    font-family: 'Cinzel', serif;
+    font-size: 20px; font-weight: 900;
+    color: var(--white);
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 20px rgba(140,80,255,0.6), 0 2px 8px rgba(0,0,0,0.8);
+    line-height: 1.1;
+  }
+  .eclipse-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 9px; font-weight: 600;
+    color: #e8a030;
+    letter-spacing: 0.5px;
+    margin-top: 3px;
+    text-transform: uppercase;
+  }
+  .eclipse-desc {
+    font-size: 11px; color: rgba(180,200,240,0.8);
+    margin-top: 6px;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 180px;
+  }
+  .eclipse-cta {
+    position: absolute; bottom: 10px; right: 12px;
+    z-index: 3;
+  }
+  .eclipse-btn {
+    padding: 7px 18px;
+    background: linear-gradient(135deg, #6020b0, #9040e0);
+    border: 1px solid rgba(160,80,255,0.5);
+    border-radius: 6px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px; font-weight: 700;
+    color: white; cursor: pointer;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 12px rgba(100,40,200,0.5);
+    transition: all 0.2s;
+  }
+  .eclipse-btn:hover {
+    background: linear-gradient(135deg, #7030c0, #a050f0);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(120,60,220,0.6);
+  }
+
+  /* Sky bg inside banner */
+  .banner-sky {
+    position: absolute; inset: 0;
+    background: url('assets/dashboard/hunterpath.png') center top / cover no-repeat;
+  }
+
+  /* Mountains silhouette */
+  .banner-mountains {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 70px;
+  }
+  .mountain-1 {
+    position: absolute; bottom: 0;
+    width: 0; height: 0;
+    border-left: 90px solid transparent;
+    border-right: 90px solid transparent;
+    border-bottom: 80px solid rgba(30,64,130,0.7);
+    left: 30px;
+  }
+  .mountain-2 {
+    position: absolute; bottom: 0;
+    width: 0; height: 0;
+    border-left: 75px solid transparent;
+    border-right: 75px solid transparent;
+    border-bottom: 65px solid rgba(20,48,100,0.8);
+    left: 100px;
+  }
+  .mountain-3 {
+    position: absolute; bottom: 0;
+    width: 0; height: 0;
+    border-left: 110px solid transparent;
+    border-right: 110px solid transparent;
+    border-bottom: 90px solid rgba(25,54,115,0.75);
+    right: 60px;
+  }
+  .mountain-4 {
+    position: absolute; bottom: 0;
+    width: 0; height: 0;
+    border-left: 70px solid transparent;
+    border-right: 70px solid transparent;
+    border-bottom: 60px solid rgba(15,38,85,0.85);
+    right: 20px;
+  }
+
+  /* Castle silhouette */
+  .castle {
+    position: absolute; bottom: 30px; right: 80px;
+    width: 60px; height: 70px;
+    background: rgba(180,210,240,0.25);
+    clip-path: polygon(10% 100%, 10% 40%, 0% 40%, 15% 20%, 15% 0%, 25% 0%, 25% 20%, 50% 0%, 75% 20%, 75% 0%, 85% 0%, 85% 20%, 100% 40%, 90% 40%, 90% 100%);
+    filter: blur(1px);
+  }
+
+  /* Hunter character */
+  .banner-character {
+    position: absolute;
+    bottom: 0; left: 55%;
+    transform: translateX(-50%);
+    font-size: 80px;
+    filter: drop-shadow(0 0 15px rgba(106,180,255,0.5));
+    animation: heroFloat 4s ease-in-out infinite;
+    z-index: 3;
+  }
+  @keyframes heroFloat {
+    0%, 100% { transform: translateX(-50%) translateY(0px); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+  }
+
+  /* Wolf companions */
+  .wolf-left {
+    position: absolute; bottom: 0; left: 15%;
+    font-size: 32px;
+    filter: drop-shadow(0 2px 8px rgba(106,180,255,0.4));
+    animation: wolfIdle 3s ease-in-out infinite;
+    animation-delay: 0.5s;
+    z-index: 2;
+  }
+  .wolf-right {
+    position: absolute; bottom: 0; right: 12%;
+    font-size: 26px;
+    filter: drop-shadow(0 2px 8px rgba(106,180,255,0.4));
+    animation: wolfIdle 3.5s ease-in-out infinite;
+    animation-delay: 1s;
+    transform: scaleX(-1);
+    z-index: 2;
+  }
+  @keyframes wolfIdle {
+    0%, 100% { transform: scaleX(var(--flip,1)) translateY(0); }
+    50% { transform: scaleX(var(--flip,1)) translateY(-4px); }
+  }
+  .wolf-right { --flip: -1; }
+
+  /* Banner text */
+  .banner-text {
+    position: absolute; top: 0; left: 0;
+    padding: 12px 14px;
+    z-index: 4;
+  }
+  .banner-title {
+    font-family: 'Cinzel', serif;
+    font-size: 18px; font-weight: 900;
+    color: var(--white);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    letter-spacing: 0.5px;
+  }
+  .banner-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 11px; font-weight: 600;
+    color: var(--gold-light);
+    margin-top: 1px;
+    letter-spacing: 0.3px;
+  }
+  .banner-desc {
+    font-size: 12px; color: rgba(200,220,240,0.9);
+    margin-top: 6px; max-width: 200px;
+    line-height: 1.4;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+  }
+
+  .banner-info-btn {
+    position: absolute; top: 10px; right: 10px;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    color: white; cursor: pointer; z-index: 4;
+  }
+
+  /* Progress row */
+  .banner-progress {
+    position: absolute; bottom: 10px; left: 14px;
+    z-index: 4;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .progress-bar-row {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .progress-track {
+    width: 140px; height: 5px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; width: 60%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+    border-radius: 3px;
+  }
+  .progress-label {
+    font-size: 11px; color: var(--gold-light);
+    font-weight: 600;
+  }
+  .continue-btn {
+    padding: 7px 20px;
+    background: linear-gradient(135deg, #2a5ab5, #4a7ae0);
+    border: 1px solid rgba(106,180,255,0.5);
+    border-radius: 6px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px; font-weight: 700;
+    color: white; cursor: pointer;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 10px rgba(74,122,224,0.4);
+    transition: all 0.2s;
+    width: fit-content;
+  }
+  .continue-btn:hover {
+    background: linear-gradient(135deg, #3a6ac5, #5a8af0);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(74,122,224,0.5);
+  }
+
+  /* ─── BOTTOM BAR (removed) ─── */
+
+  .event-wolf-art {
+    position: absolute; right: -10px; top: -5px;
+    font-size: 90px;
+    filter:
+      drop-shadow(-5px 0 15px rgba(74,158,255,0.6))
+      drop-shadow(0 0 30px rgba(100,180,255,0.3));
+    opacity: 0.85;
+    animation: wolfGlow 3s ease-in-out infinite;
+  }
+  @keyframes wolfGlow {
+    0%, 100% { filter: drop-shadow(-5px 0 15px rgba(74,158,255,0.6)) drop-shadow(0 0 30px rgba(100,180,255,0.3)); }
+    50% { filter: drop-shadow(-5px 0 20px rgba(74,158,255,0.9)) drop-shadow(0 0 40px rgba(140,200,255,0.5)); }
+  }
+
+  /* Lightning particles */
+  .lightning-particle {
+    position: absolute;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, #6ab4ff, transparent);
+    border-radius: 1px;
+    animation: lightningFlash 2s ease-in-out infinite;
+    opacity: 0;
+  }
+  .lp1 { height: 40px; right: 55px; top: 10px; animation-delay: 0s; }
+  .lp2 { height: 60px; right: 80px; top: 20px; animation-delay: 0.7s; }
+  .lp3 { height: 30px; right: 40px; top: 40px; animation-delay: 1.4s; }
+  @keyframes lightningFlash {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.7; }
+  }
+
+  .event-content {
+    position: relative; z-index: 2;
+    padding: 10px 12px;
+  }
+  .event-name {
+    font-family: 'Cinzel', serif;
+    font-size: 16px; font-weight: 800;
+    color: #60b0ff;
+    text-shadow: 0 0 15px rgba(74,158,255,0.5);
+    letter-spacing: 0.3px;
+  }
+  .event-timer {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 11px; color: #e8a030;
+    margin-top: 3px; font-weight: 600;
+  }
+  .event-desc {
+    font-size: 11px; color: rgba(180,210,240,0.85);
+    margin-top: 6px; line-height: 1.4;
+    font-family: 'Crimson Pro', serif;
+    max-width: 160px;
+  }
+
+  /* Reward icons row */
+  .reward-row {
+    display: flex; gap: 4px;
+    margin-top: 8px;
+    position: absolute; bottom: 10px; left: 12px; z-index: 2;
+  }
+  .reward-box {
+    width: 38px; height: 38px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(232,201,106,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .reward-box:hover { border-color: var(--gold); }
+  .reward-count {
+    position: absolute; bottom: 1px; right: 2px;
+    font-size: 8px; font-weight: 700;
+    color: var(--gold-light);
+  }
+
+  /* event-main-bg used in row-main-card */
+  .event-main-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #0a2050 0%, #1a4090 40%, #0a3070 70%);
+  }
+
+  /* ─── DIVIDERS ─── */
+
+  /* ─── RIGHT PANEL (My Party) ─── */
+  .char-panel {
+    width: 210px;
+    background: linear-gradient(180deg,
+      rgba(8,18,42,0.97) 0%,
+      rgba(12,26,58,0.95) 100%
+    );
+    border-left: 1px solid rgba(232,201,106,0.25);
+    flex-shrink: 0;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    padding: 0;
+  }
+
+  /* Top gold accent line */
+  .char-panel::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent, rgba(232,201,106,0.7), transparent
+    );
+  }
+
+  /* Panel header */
+  .party-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 10px 8px;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(232,201,106,0.15);
+  }
+  .party-title-row {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .party-paw {
+    font-size: 14px; opacity: 0.85;
+  }
+  .party-title {
+    font-family: 'Cinzel', serif;
+    font-size: 13px; font-weight: 800;
+    color: var(--white);
+    letter-spacing: 0.5px;
+  }
+  .party-edit-btn {
+    padding: 4px 12px;
+    background: linear-gradient(135deg, #2a5ab5, #3a70d5);
+    border: 1px solid rgba(106,180,255,0.4);
+    border-radius: 5px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px; font-weight: 700;
+    color: white; cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: all 0.2s;
+  }
+  .party-edit-btn:hover {
+    background: linear-gradient(135deg, #3a6ac5, #4a80e5);
+    box-shadow: 0 2px 8px rgba(74,122,224,0.4);
+  }
+
+  /* Character card list */
+  .party-list {
+    flex: 1;
+    display: flex; flex-direction: column;
+    gap: 6px;
+    padding: 8px 8px 8px;
+    overflow: hidden;
+  }
+
+  .party-card {
+    border-radius: 8px;
+    border: 1.5px solid rgba(232,201,106,0.2);
+    background: linear-gradient(135deg,
+      rgba(10,22,52,0.9) 0%,
+      rgba(18,36,80,0.85) 100%
+    );
+    display: flex; align-items: center;
+    padding: 7px 8px;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
+  }
+  .party-card:hover {
+    border-color: rgba(232,201,106,0.5);
+    background: linear-gradient(135deg, rgba(15,32,70,0.95), rgba(25,48,100,0.9));
+  }
+  .party-card.ssr-card {
+    border-color: rgba(232,201,106,0.35);
+  }
+  .party-card.ssr-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,201,106,0.6), transparent);
+  }
+  .party-card.sr-card {
+    border-color: rgba(160,90,220,0.4);
+  }
+  .party-card.sr-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(160,90,220,0.7), transparent);
+  }
+
+  /* Rarity badge on card */
+  .card-rarity {
+    position: absolute; top: 5px; left: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px; font-weight: 900;
+    letter-spacing: 0.5px;
+    line-height: 1;
+  }
+  .card-rarity.ssr { color: var(--gold); text-shadow: 0 0 8px rgba(232,201,106,0.5); }
+  .card-rarity.sr { color: #c080ff; text-shadow: 0 0 8px rgba(180,100,255,0.5); }
+
+  /* Character avatar in card */
+  .card-avatar {
+    width: 46px; height: 46px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  .card-avatar.luna-bg {
+    background: radial-gradient(circle at 40% 30%, #4a8ad0, #1a3a70, #0a1a40);
+    border: 1px solid rgba(74,180,255,0.3);
+    box-shadow: 0 0 10px rgba(74,144,217,0.3);
+  }
+  .card-avatar.kael-bg {
+    background: radial-gradient(circle at 40% 30%, #5a3a8a, #2a1850, #100820);
+    border: 1px solid rgba(140,80,220,0.3);
+    box-shadow: 0 0 10px rgba(100,50,200,0.3);
+  }
+  .card-avatar.astra-bg {
+    background: radial-gradient(circle at 40% 30%, #c8a840, #6a5020, #2a1e08);
+    border: 1px solid rgba(220,180,60,0.3);
+    box-shadow: 0 0 10px rgba(200,160,50,0.3);
+  }
+
+  /* Card avatar glow ring */
+  .card-avatar::after {
+    content: '';
+    position: absolute; inset: -1px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent);
+  }
+
+  /* Top-right star icon on card */
+  .card-star-icon {
+    position: absolute; top: 5px; right: 7px;
+    font-size: 12px; opacity: 0.8;
+  }
+
+  /* Card info */
+  .card-info {
+    flex: 1; min-width: 0;
+    margin-top: 4px;
+  }
+  .card-char-name {
+    font-family: 'Cinzel', serif;
+    font-size: 11.5px; font-weight: 800;
+    color: var(--white);
+    letter-spacing: 0.2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .card-char-sub {
+    font-size: 10px;
+    color: var(--silver);
+    margin-top: 1px;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    opacity: 0.8;
+  }
+  .card-level-row {
+    display: flex; align-items: center; gap: 4px;
+    margin-top: 4px;
+  }
+  .card-level-text {
+    font-family: 'Cinzel', serif;
+    font-size: 9.5px; font-weight: 700;
+    color: var(--gold-light);
+    white-space: nowrap;
+  }
+  .card-lvbar {
+    flex: 1; height: 3px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 2px; overflow: hidden;
+  }
+  .card-lvfill {
+    height: 100%; border-radius: 2px;
+  }
+  .luna-fill { width: 87%; background: linear-gradient(90deg, #4a90d9, #7ab4ff); }
+  .kael-fill { width: 93%; background: linear-gradient(90deg, #9a50dd, #c080ff); }
+  .astra-fill { width: 86%; background: linear-gradient(90deg, #c8a030, #f0c850); }
+
+  .card-avatar.vex-bg {
+    background: radial-gradient(circle at 40% 30%, #1a7a5a, #0a3a28, #050f0a);
+    border: 1px solid rgba(40,180,120,0.3);
+    box-shadow: 0 0 10px rgba(30,150,100,0.3);
+  }
+  .vex-fill { width: 72%; background: linear-gradient(90deg, #28a870, #50d8a0); }
+  .card-element {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    margin-top: 10px;
+  }
+  .elem-moon { background: radial-gradient(circle, #2a4a8a, #0a1a40); border: 1px solid rgba(74,144,217,0.4); }
+  .elem-shadow { background: radial-gradient(circle, #3a1a5a, #0a0818); border: 1px solid rgba(120,60,200,0.4); }
+  .elem-light { background: radial-gradient(circle, #6a5010, #2a1e04); border: 1px solid rgba(220,180,60,0.4); }
+
+  /* Party Stats section - removed */
+
+  /* Dividers */
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,201,106,0.2), transparent);
+    margin: 2px 0;
+  }
+
+  /* Floating gold particles */
+  .gold-particle {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: goldFloat linear infinite;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  @keyframes goldFloat {
+    0% { opacity: 0; transform: translateY(0) rotate(0deg); }
+    15% { opacity: 0.8; }
+    85% { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-120px) rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-sky"></div>
+<div class="stars"></div>
+<div class="cloud c1"></div>
+<div class="cloud c2"></div>
+<div class="cloud c3"></div>
+
+<!-- Gold particles -->
+<div class="gold-particle" style="left:15%;bottom:40%;animation-duration:7s;animation-delay:0s;"></div>
+<div class="gold-particle" style="left:40%;bottom:30%;animation-duration:9s;animation-delay:3s;width:4px;height:4px;"></div>
+<div class="gold-particle" style="left:65%;bottom:50%;animation-duration:6s;animation-delay:1.5s;"></div>
+<div class="gold-particle" style="left:80%;bottom:35%;animation-duration:8s;animation-delay:5s;"></div>
+
+<div class="wrapper">
+
+  <!-- SIDEBAR - full height -->
+  <div class="sidebar">
+      <!-- Profile -->
+      <div class="sidebar-profile">
+        <div class="profile-avatar">🐺</div>
+        <div class="profile-info">
+          <div class="profile-name">Lone Hunter</div>
+          <div class="profile-level">
+            Lv.58&nbsp;
+            <div class="xp-bar"><div class="xp-fill"></div></div>
+            &nbsp;12580/18800
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="nav-item active">
+          <div class="nav-icon"><img src="assets/dashboard/icons/homes.png" alt="Home"></div>
+          <div class="nav-label">Home</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon"><img src="assets/dashboard/icons/hunter.png" alt="Hunters"></div>
+          <div class="nav-label">Hunters</div>
+          <div class="nav-badge">!</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon"><img src="assets/dashboard/icons/weapon.png" alt="Weapons"></div>
+          <div class="nav-label">Weapons</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon"><img src="assets/dashboard/icons/quests.png" alt="Quests"></div>
+          <div class="nav-label">Quests</div>
+          <div class="nav-badge">!</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon"><img src="assets/dashboard/icons/summons.png" alt="Summon"></div>
+          <div class="nav-label">Summon</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon"><img src="assets/dashboard/icons/shops.png" alt="Shop"></div>
+          <div class="nav-label">Shop</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon"><img src="assets/dashboard/icons/codex.png" alt="Codex"></div>
+          <div class="nav-label">Codex</div>
+        </div>
+      </div>
+
+      <div class="sidebar-portrait">
+        <div class="wolf-medallion">
+          <img src="assets/dashboard/logoloki.png" alt="Loki" style="width:100%;height:100%;object-fit:contain;position:relative;z-index:2;">
+        </div>
+      </div>
+
+  </div>
+
+  <!-- CENTER COLUMN -->
+  <div class="center-col">
+
+  <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="top-spacer"></div>
+  
+      <div class="currency-group">
+        <div class="currency-pill">
+          <span class="icon">🪙</span>
+          1,258,760
+          <div class="plus-btn">+</div>
+        </div>
+        <div class="currency-pill">
+          <span class="icon">💎</span>
+          12,540
+          <div class="plus-btn">+</div>
+        </div>
+        <div class="energy-pill">
+          <span class="energy-icon">⚡</span>
+          76/180
+          <div class="plus-btn" style="background:rgba(160,96,255,0.8);color:white;">+</div>
+        </div>
+      </div>
+  
+      <div class="top-actions">
+        <div class="top-action-btn">✉️</div>
+        <div class="top-action-btn">
+          🔔
+          <div class="notif-badge">!</div>
+        </div>
+        <div class="top-action-btn">⚙️</div>
+      </div>
+    </div>
+
+    <!-- CONTENT AREA -->
+    <div class="body-row">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+      <!-- ROW 1: Hunter's Path (full width) -->
+      <div class="content-row row-hero">
+        <div class="quest-banner">
+          <div class="banner-sky"></div>
+          <div class="banner-info-btn">i</div>
+          <div class="banner-progress">
+            <div class="continue-btn">Continue</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 2: Moonhunt + 3 side cards -->
+      <div class="content-row row-events">
+        <div class="row-main-card">
+          <div class="event-main-bg"></div>
+          <img src="assets/dashboard/moonhunt.png" alt="Moonhunt" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;z-index:1;opacity:0.95;">
+          <div class="lightning-particle lp1"></div>
+          <div class="lightning-particle lp2"></div>
+          <div class="lightning-particle lp3"></div>
+        </div>
+        <div class="row-side-stack">
+          <div class="event-side-card"><img src="assets/dashboard/bountyboard.png" alt="Bounty Board"></div>
+          <div class="event-side-card"><img src="assets/dashboard/shadowrift.png" alt="Shadow Rift"></div>
+          <div class="event-side-card"><img src="assets/dashboard/celestialsanctum.png" alt="Celestial Sanctum"></div>
+        </div>
+      </div>
+
+      <!-- ROW 3: Eclipse Hunt (full width) -->
+      <div class="content-row row-eclipse">
+        <div class="eclipse-banner">
+          <div class="eclipse-bg"></div>
+          <img src="assets/dashboard/eclipsehunt.png" alt="Eclipse Hunt" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:inherit;z-index:1;opacity:0.9;">
+          <div class="eclipse-overlay"></div>
+          <div class="eclipse-cta">
+            <div class="eclipse-btn">Go to Event →</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-content -->
+    </div><!-- /body-row -->
+
+  </div><!-- /center-col -->
+
+  <!-- RIGHT PANEL - Main Char -->
+  <div class="char-panel">
+
+    <!-- Header -->
+    <div class="party-header">
+      <div class="party-title-row">
+        <span class="party-paw">⚔️</span>
+        <span class="party-title">Main Char</span>
+      </div>
+      <div class="party-edit-btn">Edit</div>
+    </div>
+
+    <!-- Party characters -->
+    <div class="party-list">
+
+      <!-- Slot 1 -->
+      <div class="party-card ssr-card">
+        <div class="card-avatar luna-bg"></div>
+        <div class="card-element elem-moon"></div>
+      </div>
+
+      <!-- Slot 2 -->
+      <div class="party-card sr-card">
+        <div class="card-avatar kael-bg"></div>
+        <div class="card-element elem-shadow"></div>
+      </div>
+
+      <!-- Slot 3 -->
+      <div class="party-card ssr-card">
+        <div class="card-avatar astra-bg"></div>
+        <div class="card-element elem-light"></div>
+      </div>
+
+      <!-- Slot 4 -->
+      <div class="party-card ssr-card">
+        <div class="card-avatar vex-bg"></div>
+        <div class="card-element elem-shadow"></div>
+      </div>
+
+    </div><!-- /party-list -->
+
+  </div><!-- /char-panel -->
+
+</div><!-- /wrapper -->
+
+</body>
+</html>
