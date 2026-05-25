@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=750, initial-scale=1.0" name="viewport"/>
+<title>Wolf Hunter - Quests</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --gold: #e8c96a;
+    --gold-light: #f5dfa0;
+    --gold-dark: #b8962a;
+    --blue-deep: #0a1628;
+    --blue-mid: #112240;
+    --blue-bright: #1e4080;
+    --blue-sky: #4a90d9;
+    --blue-glow: #6ab4ff;
+    --silver: #c8d8ee;
+    --white: #f0f4ff;
+    --red-alert: #e84040;
+    --panel-bg: rgba(10,22,50,0.85);
+    --panel-border: rgba(232,201,106,0.3);
+    --topbar-h: 64px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 100vw;
+    height: 750px;
+    overflow: hidden;
+    background: #0a1628 url('assets/dashboard/backgroundloki.jpg') center center / cover no-repeat;
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--white);
+    position: relative;
+  }
+
+  .wrapper {
+    position: relative; z-index: 2;
+    width: 100%; height: 750px;
+    display: flex; flex-direction: row;
+  }
+
+  .center-col {
+    flex: 1; display: flex; flex-direction: column;
+    overflow: hidden; min-width: 0;
+  }
+
+  .body-row { flex: 1; overflow: hidden; display: flex; }
+
+  /* ─── QUEST MAIN ─── */
+  .quest-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .quest-main::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(74,144,217,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .quest-main::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,201,106,0.3), transparent);
+  }
+  .coming-soon-wrap {
+    text-align: center;
+    position: relative; z-index: 1;
+    padding: 20px;
+  }
+  .coming-soon-icon {
+    font-size: 52px;
+    margin-bottom: 18px;
+    filter: drop-shadow(0 0 20px rgba(232,201,106,0.5));
+  }
+  .coming-soon-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 5px;
+    color: rgba(232,201,106,0.55);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .coming-soon-title {
+    font-family: 'Cinzel', serif;
+    font-size: 40px; font-weight: 900;
+    letter-spacing: 4px;
+    background: linear-gradient(180deg, #f5dfa0 0%, #e8c96a 50%, #b8962a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .coming-soon-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 14px; font-weight: 400;
+    color: rgba(232,201,106,0.65);
+    letter-spacing: 2px;
+    margin-bottom: 22px;
+  }
+  .coming-soon-divider {
+    width: 120px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,201,106,0.45), transparent);
+    margin: 0 auto 22px;
+  }
+  .coming-soon-desc {
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px; font-style: italic;
+    color: rgba(200,216,238,0.5);
+    line-height: 1.8;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  /* ─── CHAR PANEL ─── */
+  .char-panel {
+    width: 185px; background: rgba(6,14,36,0.97);
+    border-left: 1px solid rgba(232,201,106,0.2);
+    flex-shrink: 0; display: flex; flex-direction: column;
+    overflow: hidden; position: relative;
+    padding: 6px 6px; gap: 5px;
+  }
+  .char-panel-header {
+    height: var(--topbar-h);
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 8px;
+    background: linear-gradient(180deg, rgba(5,12,30,0.95) 0%, rgba(10,22,50,0.85) 100%);
+    border-bottom: 1px solid rgba(232,201,106,0.25);
+    flex-shrink: 0; margin: -6px -6px 0 -6px; width: calc(100% + 12px);
+  }
+  .connect-wallet-btn {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 7px 12px; width: 100%;
+    background: linear-gradient(135deg, rgba(18,36,80,0.95), rgba(26,52,110,0.9));
+    border: 1px solid rgba(232,201,106,0.5); border-radius: 20px; cursor: pointer;
+    font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700;
+    color: var(--gold-light); letter-spacing: 0.4px; transition: all 0.2s;
+    box-shadow: 0 0 12px rgba(232,201,106,0.1); white-space: nowrap;
+  }
+  .connect-wallet-btn:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 18px rgba(232,201,106,0.25);
+    background: linear-gradient(135deg, rgba(24,46,100,0.98), rgba(34,64,130,0.95));
+  }
+  .wallet-icon { font-size: 14px; color: var(--gold); line-height: 1; }
+  .portrait-card {
+    flex: 1; border-radius: 8px; border: 1.5px solid rgba(232,201,106,0.3);
+    position: relative; overflow: hidden; cursor: pointer; min-height: 0;
+    background: linear-gradient(135deg, rgba(10,22,52,0.95), rgba(20,38,80,0.9));
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .portrait-card:hover { border-color: rgba(232,201,106,0.65); box-shadow: 0 0 12px rgba(232,201,106,0.2); }
+  .portrait-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(232,201,106,0.6), transparent); z-index: 3; }
+  .portrait-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; position: absolute; inset: 0; }
+  .portrait-ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .portrait-ph.ph-blue   { background: radial-gradient(circle at 40% 30%, #2a5a9a, #0e2050, #060e28); }
+  .portrait-ph.ph-purple { background: radial-gradient(circle at 40% 30%, #4a2870, #1e0e40, #080418); }
+  .portrait-ph.ph-gold   { background: radial-gradient(circle at 40% 30%, #8a6020, #3a2808, #120e04); }
+  .portrait-gem { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; background: var(--gold); clip-path: polygon(50% 0%,100% 50%,50% 100%,0% 50%); z-index: 5; box-shadow: 0 0 6px rgba(232,201,106,0.8); }
+  .portrait-name { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 10px 8px; background: linear-gradient(0deg, rgba(4,10,28,0.95) 0%, rgba(4,10,28,0.4) 70%, transparent 100%); font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; color: var(--white); letter-spacing: 0.8px; text-align: right; text-transform: uppercase; z-index: 4; }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar"></div>
+
+  <!-- CENTER COLUMN -->
+  <div class="center-col">
+
+    <!-- TOPBAR placeholder — diisi topbar.js -->
+    <div class="topbar"></div>
+
+    <div class="body-row">
+      <div class="quest-main">
+        <div class="coming-soon-wrap">
+          <div class="coming-soon-icon">📜</div>
+          <div class="coming-soon-label">Chapter Awaits</div>
+          <div class="coming-soon-title">Quests</div>
+          <div class="coming-soon-sub">Coming Soon</div>
+          <div class="coming-soon-divider"></div>
+          <div class="coming-soon-desc">
+            Quests will be available after the game launches.<br/>Prepare your hunter for the hunt ahead.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /center-col -->
+
+  <!-- RIGHT PANEL -->
+  <div class="char-panel">
+    <div class="char-panel-header">
+      <div class="connect-wallet-btn" onclick="document.getElementById('coming-soon-popup').style.display='flex'">
+        <span class="wallet-icon">⬡</span>
+        <span class="wallet-label">Connect Wallet</span>
+      </div>
+    </div>
+    <div class="portrait-card"><div class="portrait-gem"></div><div class="portrait-ph ph-blue"></div><img alt="Luna" class="portrait-img" onerror="this.style.display='none'" src="assets/dashboard/chars/luna.jpg"/><div class="portrait-name">Luna</div></div>
+    <div class="portrait-card"><div class="portrait-gem"></div><div class="portrait-ph ph-gold"></div><img alt="Orion" class="portrait-img" onerror="this.style.display='none'" src="assets/dashboard/chars/orion.jpg"/><div class="portrait-name">Orion</div></div>
+    <div class="portrait-card"><div class="portrait-gem"></div><div class="portrait-ph ph-purple"></div><img alt="Kael" class="portrait-img" onerror="this.style.display='none'" src="assets/dashboard/chars/kael.jpg"/><div class="portrait-name">Kael</div></div>
+    <div class="portrait-card"><div class="portrait-gem"></div><div class="portrait-ph ph-blue"></div><img alt="Iris" class="portrait-img" onerror="this.style.display='none'" src="assets/dashboard/chars/iris.jpg"/><div class="portrait-name">Iris</div></div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<!-- Coming Soon Popup -->
+<div id="coming-soon-popup" onclick="this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;background:rgba(4,10,28,0.75);backdrop-filter:blur(6px);">
+  <div onclick="event.stopPropagation()" style="background:linear-gradient(160deg,rgba(8,18,46,0.98),rgba(12,26,60,0.98));border:1px solid rgba(232,201,106,0.35);border-radius:14px;padding:28px 32px;text-align:center;position:relative;min-width:220px;box-shadow:0 0 40px rgba(74,140,255,0.2);">
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,201,106,0.6),transparent);border-radius:14px 14px 0 0;"></div>
+    <div style="font-size:28px;margin-bottom:10px;">⬡</div>
+    <div style="font-family:'Cinzel',serif;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;margin-bottom:6px;">Coming Soon</div>
+    <div style="font-size:11px;color:rgba(180,210,240,0.65);font-family:'Crimson Pro',serif;font-style:italic;line-height:1.5;">Wallet connection will be<br/>available at launch.</div>
+    <div onclick="document.getElementById('coming-soon-popup').style.display='none'" style="margin-top:18px;padding:7px 24px;background:linear-gradient(135deg,rgba(30,70,180,0.7),rgba(50,100,220,0.5));border:1px solid rgba(106,180,255,0.35);border-radius:7px;font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:#fff;cursor:pointer;letter-spacing:0.5px;">Got it</div>
+  </div>
+</div>
+
+<script src="sidebar.js"></script>
+<script src="topbar.js"></script>
+<script>
+  loadSidebar('quests');
+  loadTopbar({ showWallet: false });
+</script>
+</body>
+</html>
