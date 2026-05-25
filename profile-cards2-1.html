@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=750, initial-scale=1.0" name="viewport"/>
+<title>Wolf Hunter - Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --gold: #e8c96a; --gold-light: #f5dfa0; --gold-dark: #b8962a;
+    --blue-deep: #0a1628; --blue-mid: #112240; --blue-bright: #1e4080;
+    --blue-sky: #4a90d9; --blue-glow: #6ab4ff;
+    --silver: #c8d8ee; --white: #f0f4ff; --topbar-h: 64px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    width:100vw; height:750px; overflow:hidden;
+    background:#0a1628 url('assets/dashboard/backgroundloki.png') center/cover no-repeat;
+    font-family:'Rajdhani',sans-serif; color:var(--white);
+  }
+  .wrapper { position:relative; z-index:2; width:100%; height:750px; display:flex; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width:178px; flex-shrink:0; display:flex; flex-direction:column;
+    background:linear-gradient(180deg,rgba(5,11,28,0.99),rgba(8,16,38,0.98) 40%,rgba(6,13,32,0.99));
+    border-right:1px solid rgba(232,201,106,0.22); position:relative; overflow:visible;
+  }
+  .sidebar::before {
+    content:''; position:absolute; top:0; right:0; width:1px; height:100%;
+    background:linear-gradient(180deg,transparent,rgba(232,201,106,0.6) 20%,rgba(232,201,106,0.6) 80%,transparent);
+    box-shadow:0 0 8px rgba(232,201,106,0.15); z-index:10;
+  }
+  .sidebar-nav { flex:1; padding:6px 0 4px; display:flex; flex-direction:column; }
+  .nav-divider { display:flex; align-items:center; padding:8px 12px 6px; gap:6px; flex-shrink:0; }
+  .nav-divider::before,.nav-divider::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,transparent,rgba(232,201,106,0.28),transparent); }
+  .nav-divider-gem { width:5px; height:5px; background:rgba(232,201,106,0.6); transform:rotate(45deg); box-shadow:0 0 6px rgba(232,201,106,0.4); }
+  .nav-item {
+    display:flex; align-items:center; gap:9px; padding:7px 10px 7px 14px;
+    cursor:pointer; position:relative; transition:all 0.18s;
+    margin:1px 6px 1px 0; border-radius:0 6px 6px 0; border:1px solid transparent; border-left:none;
+  }
+  .nav-item:hover { background:rgba(232,201,106,0.06); border-color:rgba(232,201,106,0.1); }
+  .nav-item.active {
+    background:linear-gradient(90deg,rgba(74,144,217,0.14),rgba(74,144,217,0.06));
+    border-color:rgba(232,201,106,0.18); box-shadow:inset 0 0 12px rgba(74,144,217,0.08);
+  }
+  .nav-item.active::before {
+    content:''; position:absolute; left:0; top:50%; transform:translateY(-50%);
+    width:2.5px; height:55%;
+    background:linear-gradient(180deg,rgba(232,201,106,0.4),var(--gold),rgba(232,201,106,0.4));
+    border-radius:0 2px 2px 0; box-shadow:0 0 8px rgba(232,201,106,0.7);
+  }
+  .nav-icon { width:24px; height:24px; border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden; }
+  .nav-icon img { width:18px; height:18px; object-fit:contain; filter:brightness(0.55) saturate(0.6); transition:filter 0.18s; }
+  .nav-item:hover .nav-icon img { filter:brightness(0.8) saturate(0.8); }
+  .nav-item.active .nav-icon { background:rgba(232,201,106,0.1); }
+  .nav-item.active .nav-icon img { filter:brightness(1) saturate(1.2) drop-shadow(0 0 5px rgba(232,201,106,0.7)); }
+  .nav-label { font-family:'Cinzel',serif; font-size:10.5px; font-weight:600; color:rgba(200,216,238,0.45); letter-spacing:0.5px; transition:color 0.18s; }
+  .nav-item:hover .nav-label { color:rgba(200,216,238,0.7); }
+  .nav-item.active .nav-label { color:var(--gold-light); text-shadow:0 0 12px rgba(232,201,106,0.4); }
+  .sidebar-portrait { width:100%; padding:8px 10px 18px; position:relative; flex-shrink:0; }
+  .sidebar-portrait::before { content:''; position:absolute; top:0; left:14px; right:14px; height:1px; background:linear-gradient(90deg,transparent,rgba(232,201,106,0.25),transparent); }
+  .wolf-medallion { width:88px; height:88px; margin:0 auto; display:flex; align-items:center; justify-content:center; position:relative; }
+  .wolf-medallion::before { content:''; position:absolute; inset:-10px; border-radius:50%; background:radial-gradient(circle,rgba(232,201,106,0.08),transparent 70%); }
+
+  /* CENTER */
+  .center-col { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
+
+  /* TOPBAR */
+  .topbar {
+    height:var(--topbar-h); flex-shrink:0;
+    background:linear-gradient(180deg,rgba(5,12,30,0.95),rgba(10,22,50,0.85));
+    border-bottom:1px solid rgba(232,201,106,0.25);
+    display:flex; align-items:center; padding:0 12px; gap:8px; backdrop-filter:blur(6px);
+  }
+  .top-spacer { flex:1; }
+  .currency-group { display:flex; align-items:center; gap:6px; }
+  .currency-pill {
+    display:flex; align-items:center; gap:6px;
+    background:rgba(5,12,30,0.7); border:1px solid rgba(232,201,106,0.25);
+    border-radius:20px; padding:6px 14px 6px 12px;
+    font-size:14px; font-weight:600; color:var(--white);
+    min-width:90px; justify-content:space-between;
+  }
+  .currency-pill .plus-btn {
+    width:20px; height:20px; border-radius:50%; background:var(--gold); color:var(--blue-deep);
+    font-size:13px; font-weight:900; display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .energy-pill {
+    display:flex; align-items:center; gap:6px;
+    background:rgba(5,12,30,0.7); border:1px solid rgba(106,180,255,0.3);
+    border-radius:20px; padding:6px 14px 6px 12px;
+    font-size:14px; font-weight:600; min-width:110px; justify-content:space-between;
+  }
+  .connect-wallet-btn {
+    display:flex; align-items:center; gap:7px; padding:7px 14px;
+    background:linear-gradient(135deg,rgba(18,36,80,0.95),rgba(26,52,110,0.9));
+    border:1px solid rgba(232,201,106,0.5); border-radius:20px; cursor:pointer;
+    font-family:'Cinzel',serif; font-size:10px; font-weight:700;
+    color:var(--gold-light); letter-spacing:0.4px; white-space:nowrap;
+  }
+  .wallet-icon { font-size:14px; color:var(--gold); }
+
+  /* BODY */
+  .body-row { flex:1; overflow:hidden; display:flex; }
+  .profile-content { flex:1; display:flex; flex-direction:column; padding:10px 12px 8px 14px; gap:8px; overflow:hidden; }
+
+  /* PROFILE BANNER */
+  .profile-banner {
+    flex-shrink:0; height:170px;
+    border:1px solid rgba(232,201,106,0.35); border-radius:10px;
+    overflow:hidden; position:relative;
+    background:linear-gradient(135deg,rgba(8,18,46,0.97),rgba(14,30,72,0.9));
+  }
+  .profile-banner::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(232,201,106,0.6),transparent); z-index:3; }
+  .banner-bg { position:absolute; inset:0; background:url('assets/profile/profilebanner.jpg') center 40%/cover no-repeat; opacity:0.4; }
+  .banner-overlay { position:absolute; inset:0; background:linear-gradient(90deg,rgba(6,14,36,0.92) 0%,rgba(6,14,36,0.5) 60%,rgba(6,14,36,0.1) 100%); }
+  .banner-inner { position:relative; z-index:2; height:100%; display:flex; align-items:center; padding:14px 18px; gap:16px; }
+
+  .avatar-wrap { position:relative; flex-shrink:0; }
+  .avatar-ring {
+    width:90px; height:90px; border-radius:50%;
+    border:2px solid rgba(232,201,106,0.7);
+    background:radial-gradient(circle at 35% 30%,#4a7ab5,#1a3060);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 20px rgba(106,180,255,0.4);
+    overflow:hidden; cursor:pointer; position:relative;
+    transition:box-shadow 0.2s, border-color 0.2s;
+  }
+  .avatar-ring:hover {
+    border-color:rgba(232,201,106,1);
+    box-shadow:0 0 28px rgba(106,180,255,0.7);
+  }
+  .avatar-ring img { width:100%; height:100%; object-fit:cover; }
+  .avatar-plus-icon {
+    position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:3px;
+    background:rgba(6,18,48,0.6); border-radius:50%;
+    opacity:0; transition:opacity 0.2s;
+    font-family:'Cinzel',serif; font-size:9px; color:var(--gold-light);
+    letter-spacing:0.5px;
+  }
+  .avatar-ring:hover .avatar-plus-icon { opacity:1; }
+  .avatar-plus-icon .plus-sym { font-size:22px; font-weight:900; color:var(--gold); line-height:1; }
+  /* Avatar with no char selected shows + by default */
+  .avatar-ring.no-char { background:radial-gradient(circle,rgba(30,64,128,0.9),rgba(6,14,36,0.95)); }
+  .avatar-ring.no-char .avatar-plus-icon { opacity:1; background:transparent; }
+  .avatar-level {
+    position:absolute; bottom:-4px; left:50%; transform:translateX(-50%);
+    background:linear-gradient(135deg,#b8962a,#e8c96a); color:var(--blue-deep);
+    font-family:'Cinzel',serif; font-size:10px; font-weight:900;
+    padding:2px 9px; border-radius:10px; white-space:nowrap;
+    box-shadow:0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .banner-info { flex:1; display:flex; flex-direction:column; gap:5px; }
+  .banner-name { font-family:'Cinzel',serif; font-size:20px; font-weight:900; color:var(--white); display:flex; align-items:center; gap:8px; }
+  .edit-btn { width:20px; height:20px; background:rgba(232,201,106,0.12); border:1px solid rgba(232,201,106,0.3); border-radius:4px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:10px; }
+  .banner-title { font-family:'Crimson Pro',serif; font-style:italic; font-size:12px; color:rgba(200,216,238,0.55); }
+  .banner-meta { display:flex; gap:18px; }
+  .meta-item { display:flex; flex-direction:column; gap:1px; }
+  .meta-label { font-family:'Cinzel',serif; font-size:8.5px; color:rgba(200,216,238,0.4); letter-spacing:0.8px; text-transform:uppercase; }
+  .meta-val { font-size:11px; font-weight:600; color:var(--gold-light); }
+  .exp-row { display:flex; flex-direction:column; gap:3px; margin-top:2px; }
+  .exp-top { display:flex; justify-content:space-between; font-family:'Cinzel',serif; font-size:9px; color:rgba(200,216,238,0.45); }
+  .exp-bar { height:4px; background:rgba(255,255,255,0.08); border-radius:3px; overflow:hidden; border:1px solid rgba(232,201,106,0.12); }
+  .exp-fill { height:100%; background:linear-gradient(90deg,var(--gold-dark),var(--gold)); border-radius:3px; box-shadow:0 0 8px rgba(232,201,106,0.5); }
+
+  .banner-stats { flex-shrink:0; display:flex; flex-direction:column; gap:5px; width:148px; }
+  .bstat {
+    background:rgba(8,18,46,0.75); border:1px solid rgba(232,201,106,0.18); border-radius:7px;
+    padding:6px 10px; display:flex; align-items:center; gap:8px;
+  }
+  .bstat-icon { width:26px; height:26px; background:rgba(232,201,106,0.08); border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+  .bstat-label { font-family:'Cinzel',serif; font-size:7.5px; color:rgba(200,216,238,0.4); letter-spacing:0.7px; text-transform:uppercase; }
+  .bstat-val { font-family:'Cinzel',serif; font-size:14px; font-weight:900; color:var(--white); line-height:1.2; }
+
+  /* TAB BAR */
+  .tab-bar {
+    flex-shrink:0; display:flex; align-items:stretch; gap:0;
+    background:rgba(5,11,28,0.85); border:1px solid rgba(232,201,106,0.22);
+    border-radius:8px; overflow:hidden; height:40px;
+  }
+  .tab-item {
+    flex:1; display:flex; align-items:center; justify-content:center; gap:7px;
+    cursor:pointer; position:relative; transition:all 0.18s;
+    font-family:'Cinzel',serif; font-size:10.5px; font-weight:700;
+    color:rgba(200,216,238,0.4); letter-spacing:0.5px;
+    border-right:1px solid rgba(232,201,106,0.12);
+  }
+  .tab-item:last-child { border-right:none; }
+  .tab-item:hover { background:rgba(232,201,106,0.05); color:rgba(200,216,238,0.7); }
+  .tab-item.active {
+    background:linear-gradient(180deg,rgba(74,144,217,0.18),rgba(74,144,217,0.06));
+    color:var(--gold-light);
+  }
+  .tab-item.active::after {
+    content:''; position:absolute; bottom:0; left:15%; right:15%; height:2px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    box-shadow:0 0 8px rgba(232,201,106,0.6); border-radius:2px;
+  }
+  .tab-icon { width:16px; height:16px; object-fit:contain; filter:brightness(0.5); transition:filter 0.18s; }
+  .tab-item.active .tab-icon,.tab-item:hover .tab-icon { filter:brightness(1) drop-shadow(0 0 4px rgba(232,201,106,0.5)); }
+
+  /* TAB PANELS */
+  .tab-panels { flex:1; min-height:0; position:relative; }
+  .tab-panel { display:none; height:100%; }
+  .tab-panel.active { display:flex; }
+
+  /* HUNTER PANEL — 3 columns */
+  .hunter-panel { width:100%; display:flex; gap:8px; height:100%; }
+
+  /* Left: Character Card */
+  .char-card {
+    width:260px; flex-shrink:0;
+    border:1px solid rgba(232,201,106,0.3); border-radius:8px;
+    background:linear-gradient(160deg,rgba(6,14,36,0.97),rgba(10,22,52,0.95));
+    position:relative; overflow:hidden; display:flex; flex-direction:column;
+  }
+  .char-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(232,201,106,0.5),transparent); }
+  .char-art {
+    flex:1; position:relative; overflow:hidden; min-height:0;
+  }
+  .char-art img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+  .char-art-overlay { position:absolute; inset:0; background:linear-gradient(180deg,transparent 50%,rgba(6,14,36,0.95) 100%); }
+  .char-name-area {
+    position:absolute; bottom:0; left:0; right:0; padding:8px 10px 6px;
+  }
+  .char-name { font-family:'Cinzel',serif; font-size:24px; font-weight:900; color:var(--white); text-shadow:0 2px 10px rgba(0,0,0,0.8); }
+  .char-stars { display:flex; gap:2px; margin:2px 0; }
+  .char-stars span { font-size:10px; color:var(--gold); }
+  .char-element { display:flex; align-items:center; gap:5px; font-size:10px; color:rgba(180,220,255,0.8); font-family:'Cinzel',serif; }
+  .char-element img { width:14px; height:14px; object-fit:contain; }
+
+  .char-wolf-bar {
+    flex-shrink:0; padding:7px 10px;
+    background:rgba(4,10,26,0.9);
+    border-top:1px solid rgba(232,201,106,0.15);
+    display:flex; align-items:center; gap:8px;
+  }
+  .wolf-avatar { width:36px; height:36px; border-radius:50%; border:1.5px solid rgba(232,201,106,0.5); overflow:hidden; flex-shrink:0; }
+  .wolf-avatar img { width:100%; height:100%; object-fit:cover; }
+  .wolf-info { flex:1; }
+  .wolf-equipped-label { font-family:'Cinzel',serif; font-size:7px; color:rgba(232,201,106,0.6); letter-spacing:0.8px; text-transform:uppercase; }
+  .wolf-name { font-family:'Cinzel',serif; font-size:11px; font-weight:700; color:var(--gold-light); }
+  .wolf-stars { display:flex; gap:1px; }
+  .wolf-stars span { font-size:8px; color:var(--gold); }
+
+  .char-power-bar {
+    flex-shrink:0; padding:6px 10px;
+    background:rgba(4,10,26,0.95);
+    border-top:1px solid rgba(232,201,106,0.1);
+    display:flex; align-items:center; gap:8px;
+  }
+  .power-icon { width:28px; height:28px; object-fit:contain; }
+  .power-info {}
+  .power-label { font-family:'Cinzel',serif; font-size:7.5px; color:rgba(232,201,106,0.6); letter-spacing:0.8px; text-transform:uppercase; }
+  .power-val { font-family:'Cinzel',serif; font-size:16px; font-weight:900; color:var(--gold-light); }
+
+  /* Middle: Stats */
+  .stats-panel {
+    width:220px; flex-shrink:0;
+    border:1px solid rgba(232,201,106,0.2); border-radius:8px;
+    background:rgba(6,14,36,0.9);
+    display:flex; flex-direction:column;
+    padding:10px;
+  }
+  .stats-title { font-family:'Cinzel',serif; font-size:12px; font-weight:900; color:var(--gold); text-align:center; letter-spacing:1px; margin-bottom:8px; }
+  .hexagon-wrap { display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .stats-list { flex:1; display:flex; flex-direction:column; gap:4px; margin-top:8px; overflow:hidden; }
+  .stat-row {
+    display:flex; align-items:center; gap:6px;
+    padding:4px 8px;
+    background:rgba(8,18,46,0.5); border-radius:5px;
+    border:1px solid rgba(232,201,106,0.08);
+  }
+  .stat-row-icon { width:16px; height:16px; object-fit:contain; flex-shrink:0; opacity:0.8; }
+  .stat-row-name { font-family:'Cinzel',serif; font-size:8.5px; color:rgba(200,216,238,0.5); letter-spacing:0.6px; text-transform:uppercase; flex:1; }
+  .stat-row-val { font-size:12px; font-weight:700; color:var(--white); }
+
+  /* Right: Char Info */
+  .info-panel {
+    flex:1; min-width:0;
+    border:1px solid rgba(232,201,106,0.2); border-radius:8px;
+    background:rgba(6,14,36,0.9);
+    display:flex; flex-direction:column;
+    padding:10px; gap:6px; overflow:hidden;
+  }
+  .info-section-title { font-family:'Cinzel',serif; font-size:11px; font-weight:900; color:var(--gold); text-align:center; letter-spacing:0.8px; }
+  .info-divider { height:1px; background:linear-gradient(90deg,transparent,rgba(232,201,106,0.3),transparent); margin:2px 0; }
+  .info-row { display:flex; align-items:center; gap:7px; }
+  .info-row-icon { width:18px; height:18px; object-fit:contain; flex-shrink:0; }
+  .info-row-content { flex:1; min-width:0; }
+  .info-row-label { font-family:'Cinzel',serif; font-size:7.5px; color:rgba(200,216,238,0.4); letter-spacing:0.7px; text-transform:uppercase; }
+  .info-row-val { font-size:11px; font-weight:600; color:var(--white); }
+
+  .affinity-row { display:flex; align-items:center; gap:7px; }
+  .affinity-bar-wrap { flex:1; }
+  .affinity-bar { height:3px; background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden; margin-top:2px; }
+  .affinity-fill { height:100%; border-radius:2px; }
+
+  .energy-row-info { display:flex; align-items:center; gap:7px; }
+  .energy-bar-wrap { flex:1; }
+  .energy-bar { height:3px; background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden; margin-top:2px; }
+  .energy-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,#4a90d9,#6ab4ff); }
+
+  .story-box {
+    flex:1; min-height:0; overflow:hidden;
+    background:rgba(4,10,26,0.6); border-radius:6px;
+    border:1px solid rgba(232,201,106,0.1);
+    padding:7px 8px;
+  }
+  .story-title { font-family:'Cinzel',serif; font-size:10px; font-weight:700; color:var(--gold); text-align:center; letter-spacing:0.8px; margin-bottom:5px; }
+  .story-text { font-family:'Crimson Pro',serif; font-style:italic; font-size:10.5px; color:rgba(200,216,238,0.65); line-height:1.55; }
+
+  /* Character Select Modal */
+  #char-select-modal {
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,0.75); z-index:2000;
+    align-items:center; justify-content:center; backdrop-filter:blur(6px);
+  }
+  #char-select-modal.open { display:flex; }
+  .char-modal-box {
+    background:linear-gradient(160deg,rgba(6,14,40,0.99),rgba(10,24,58,0.98));
+    border:1px solid rgba(232,201,106,0.4); border-radius:16px;
+    padding:24px 28px; min-width:420px; max-width:480px;
+    box-shadow:0 0 60px rgba(74,144,217,0.25);
+    position:relative;
+  }
+  .char-modal-box::before { content:''; position:absolute; top:0; left:10%; right:10%; height:1px; background:linear-gradient(90deg,transparent,rgba(232,201,106,0.7),transparent); border-radius:2px; }
+  .char-modal-title {
+    font-family:'Cinzel',serif; font-size:15px; font-weight:900;
+    color:var(--gold-light); text-align:center; letter-spacing:1.5px;
+    margin-bottom:6px;
+  }
+  .char-modal-sub {
+    font-family:'Crimson Pro',serif; font-style:italic; font-size:11px;
+    color:rgba(200,216,238,0.45); text-align:center; margin-bottom:18px;
+  }
+  .char-grid {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
+  }
+  .char-option {
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    cursor:pointer; padding:8px 6px; border-radius:10px;
+    border:1px solid rgba(232,201,106,0.1);
+    background:rgba(8,18,50,0.7);
+    transition:all 0.18s;
+  }
+  .char-option:hover {
+    border-color:rgba(232,201,106,0.5);
+    background:rgba(20,40,90,0.8);
+    box-shadow:0 0 14px rgba(106,180,255,0.2);
+    transform:translateY(-2px);
+  }
+  .char-option.selected {
+    border-color:var(--gold); background:rgba(30,60,120,0.8);
+    box-shadow:0 0 18px rgba(232,201,106,0.3);
+  }
+  .char-option-avatar {
+    width:64px; height:64px; border-radius:50%;
+    border:2px solid rgba(232,201,106,0.3);
+    overflow:hidden; background:radial-gradient(circle,#2a4a80,#0a1a40);
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px;
+  }
+  .char-option-avatar img { width:100%; height:100%; object-fit:cover; object-position:top center; }
+  .char-option-name { font-family:'Cinzel',serif; font-size:9px; font-weight:700; color:var(--gold-light); letter-spacing:0.5px; text-align:center; }
+  .char-option-element { font-size:9px; color:rgba(180,210,255,0.6); font-family:'Rajdhani',sans-serif; }
+  .char-option.selected .char-option-name { color:var(--gold); text-shadow:0 0 8px rgba(232,201,106,0.5); }
+  .char-modal-close {
+    position:absolute; top:12px; right:14px;
+    width:24px; height:24px; border-radius:50%;
+    background:rgba(232,201,106,0.1); border:1px solid rgba(232,201,106,0.25);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:12px; color:var(--gold);
+    transition:background 0.15s;
+  }
+  .char-modal-close:hover { background:rgba(232,201,106,0.25); }
+  .char-modal-confirm {
+    margin-top:16px; width:100%; padding:9px;
+    background:linear-gradient(135deg,rgba(30,70,180,0.85),rgba(50,100,220,0.7));
+    border:1px solid rgba(232,201,106,0.45); border-radius:8px;
+    font-family:'Cinzel',serif; font-size:11px; font-weight:700;
+    color:var(--gold-light); cursor:pointer; letter-spacing:0.8px;
+    transition:all 0.18s; display:block; text-align:center;
+  }
+  .char-modal-confirm:hover {
+    background:linear-gradient(135deg,rgba(40,90,210,0.95),rgba(60,120,240,0.85));
+    box-shadow:0 0 16px rgba(106,180,255,0.3);
+  }
+
+  /* Name edit inline */
+  .banner-name-input {
+    background:transparent; border:none; border-bottom:1px solid rgba(232,201,106,0.5);
+    font-family:'Cinzel',serif; font-size:20px; font-weight:900; color:var(--white);
+    outline:none; width:160px; padding:0 2px;
+  }
+
+  /* ── CARDS PANEL ─────────────────────────── */
+  .cards-panel {
+    width:100%; height:100%; display:flex; gap:8px; padding:2px 0;
+  }
+
+  /* LEFT FILTER COL */
+  .cards-filter-col {
+    width:172px; flex-shrink:0;
+    background:rgba(6,14,36,0.92); border:1px solid rgba(232,201,106,0.22);
+    border-radius:8px; padding:10px 10px 12px; display:flex; flex-direction:column; gap:6px;
+    overflow:hidden;
+  }
+  .cards-filter-title {
+    font-family:'Cinzel',serif; font-size:12px; font-weight:900;
+    color:var(--gold); letter-spacing:0.8px; text-align:center; margin-bottom:4px;
+    padding-bottom:6px; border-bottom:1px solid rgba(232,201,106,0.18);
+  }
+  .filter-type-list { display:flex; flex-direction:column; gap:2px; }
+  .filter-type-item {
+    display:flex; align-items:center; gap:7px; padding:5px 8px;
+    border-radius:5px; cursor:pointer; transition:all 0.15s;
+    border:1px solid transparent;
+  }
+  .filter-type-item:hover { background:rgba(232,201,106,0.07); border-color:rgba(232,201,106,0.12); }
+  .filter-type-item.active {
+    background:linear-gradient(90deg,rgba(232,201,106,0.16),rgba(232,201,106,0.06));
+    border-color:rgba(232,201,106,0.3);
+  }
+  .filter-type-icon { font-size:13px; width:16px; text-align:center; flex-shrink:0; }
+  .filter-type-label {
+    font-family:'Cinzel',serif; font-size:9px; font-weight:700; flex:1;
+    color:rgba(200,216,238,0.55); letter-spacing:0.4px; text-transform:uppercase;
+    transition:color 0.15s;
+  }
+  .filter-type-item.active .filter-type-label { color:var(--gold-light); }
+  .filter-type-count {
+    font-family:'Cinzel',serif; font-size:10px; font-weight:700;
+    color:rgba(200,216,238,0.45); min-width:14px; text-align:right;
+  }
+  .filter-type-item.active .filter-type-count { color:var(--gold); }
+
+  .filter-rarity-section { margin-top:4px; }
+  .filter-rarity-title {
+    font-family:'Cinzel',serif; font-size:9.5px; font-weight:900; color:var(--gold);
+    letter-spacing:0.7px; text-transform:uppercase; margin-bottom:6px;
+    padding-top:6px; border-top:1px solid rgba(232,201,106,0.15);
+  }
+  .filter-rarity-list { display:flex; flex-direction:column; gap:4px; }
+  .rarity-check-row {
+    display:flex; align-items:center; gap:7px; cursor:pointer;
+    padding:2px 4px; border-radius:4px;
+  }
+  .rarity-check-row input { display:none; }
+  .rarity-checkbox-box {
+    width:14px; height:14px; border:1.5px solid rgba(200,216,238,0.35); border-radius:3px;
+    background:rgba(255,255,255,0.05); flex-shrink:0;
+  }
+  .rarity-checkbox-box.checked { background:var(--gold); border-color:var(--gold); }
+  .rarity-checkbox-box.rare { border-color:rgba(74,144,217,0.7); }
+  .rarity-checkbox-box.epic { border-color:rgba(140,80,220,0.7); }
+  .rarity-checkbox-box.legendary { border-color:rgba(232,160,40,0.8); }
+  .rarity-checkbox-box.mythic { border-color:rgba(220,60,60,0.8); }
+  .rarity-label {
+    font-family:'Cinzel',serif; font-size:9px; font-weight:600;
+    color:rgba(200,216,238,0.5); letter-spacing:0.3px; text-transform:uppercase;
+  }
+
+  /* CENTER CARDS COL */
+  .cards-center-col {
+    flex:1; min-width:0; display:flex; flex-direction:column; gap:6px;
+    background:rgba(6,14,36,0.92); border:1px solid rgba(232,201,106,0.22);
+    border-radius:8px; padding:10px; overflow:hidden;
+  }
+  .cards-collection-header {
+    display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
+  }
+  .cards-collection-title {
+    font-family:'Cinzel',serif; font-size:13px; font-weight:900;
+    color:var(--gold); letter-spacing:0.8px;
+  }
+  .cards-sort-row { display:flex; align-items:center; gap:7px; }
+  .cards-sort-label {
+    font-family:'Cinzel',serif; font-size:8.5px; color:rgba(200,216,238,0.45);
+    letter-spacing:0.5px; text-transform:uppercase;
+  }
+  .cards-sort-select {
+    background:rgba(5,12,30,0.9); border:1px solid rgba(232,201,106,0.3);
+    color:var(--gold-light); font-family:'Cinzel',serif; font-size:9px; font-weight:700;
+    padding:4px 8px; border-radius:5px; cursor:pointer; outline:none; letter-spacing:0.3px;
+  }
+
+  /* Card Grid */
+  .cards-grid {
+    flex:1; min-height:0; display:grid;
+    grid-template-columns:repeat(3,1fr);
+    grid-template-rows:repeat(2,1fr);
+    gap:8px; padding:2px;
+  }
+  .card-slot {
+    border-radius:8px; overflow:hidden; position:relative;
+    border:1px solid rgba(232,201,106,0.25);
+    background:linear-gradient(160deg,rgba(8,20,52,0.98),rgba(12,26,62,0.95));
+    cursor:pointer; transition:all 0.2s;
+  }
+  .card-slot:hover {
+    border-color:rgba(232,201,106,0.55);
+    box-shadow:0 0 14px rgba(232,201,106,0.15);
+    transform:translateY(-2px);
+  }
+  .card-slot::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg,transparent,rgba(232,201,106,0.45),transparent);
+  }
+  .card-slot::after {
+    content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg,transparent,rgba(232,201,106,0.2),transparent);
+  }
+  /* Corner decorations */
+  .card-slot-inner {
+    width:100%; height:100%; position:relative;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:4px; padding:8px;
+  }
+  .card-slot-inner::before {
+    content:''; position:absolute; top:4px; left:4px; width:8px; height:8px;
+    border-top:1.5px solid rgba(232,201,106,0.45); border-left:1.5px solid rgba(232,201,106,0.45);
+  }
+  .card-slot-inner::after {
+    content:''; position:absolute; bottom:4px; right:4px; width:8px; height:8px;
+    border-bottom:1.5px solid rgba(232,201,106,0.45); border-right:1.5px solid rgba(232,201,106,0.45);
+  }
+  .card-slot-emblem {
+    font-size:22px; opacity:0.3;
+  }
+  .card-slot-diamond {
+    font-size:14px; color:var(--gold); opacity:0.55;
+    animation:pulse-gold 2.5s ease-in-out infinite;
+    text-shadow:0 0 8px rgba(232,201,106,0.6);
+  }
+  @keyframes pulse-gold {
+    0%,100%{ opacity:0.4; transform:scale(1); }
+    50%{ opacity:0.8; transform:scale(1.15); }
+  }
+  .card-slot-cs {
+    font-family:'Cinzel',serif; font-size:8px; font-weight:700;
+    color:rgba(200,216,238,0.4); letter-spacing:1px; text-transform:uppercase;
+    margin-top:2px;
+  }
+
+  /* Pagination */
+  .cards-pagination {
+    display:flex; align-items:center; justify-content:center; gap:14px; flex-shrink:0;
+  }
+  .page-btn {
+    width:24px; height:24px; border-radius:50%;
+    background:rgba(8,20,52,0.8); border:1px solid rgba(232,201,106,0.3);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gold); font-size:16px; cursor:pointer;
+    transition:all 0.15s;
+  }
+  .page-btn:hover { background:rgba(232,201,106,0.15); border-color:rgba(232,201,106,0.6); }
+  .page-indicator {
+    font-family:'Cinzel',serif; font-size:10px; font-weight:700;
+    color:rgba(200,216,238,0.55); letter-spacing:0.5px;
+  }
+
+  .cards-footer-note {
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    font-family:'Crimson Pro',serif; font-style:italic;
+    font-size:10px; color:rgba(200,216,238,0.35); flex-shrink:0;
+  }
+  .cards-footer-deco { color:rgba(232,201,106,0.3); }
+
+  /* RIGHT PANELS */
+  .cards-right-col {
+    width:184px; flex-shrink:0; display:flex; flex-direction:column; gap:8px;
+  }
+  .cards-overview-box {
+    flex:1; background:rgba(6,14,36,0.92); border:1px solid rgba(232,201,106,0.22);
+    border-radius:8px; padding:10px; display:flex; flex-direction:column;
+    align-items:center; gap:5px; overflow:hidden;
+  }
+  .cards-overview-title {
+    font-family:'Cinzel',serif; font-size:11px; font-weight:900;
+    color:var(--gold); letter-spacing:0.8px; text-align:center;
+    padding-bottom:6px; border-bottom:1px solid rgba(232,201,106,0.18); width:100%;
+    text-align:center;
+  }
+  .cards-overview-emblem { margin:4px 0 2px; opacity:0.85; }
+  .cards-overview-count {
+    font-family:'Cinzel',serif; font-size:24px; font-weight:900;
+    color:var(--white); line-height:1.1;
+  }
+  .cards-overview-label {
+    font-family:'Cinzel',serif; font-size:8px; color:rgba(200,216,238,0.45);
+    letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;
+  }
+  .cards-overview-rarity-list { width:100%; display:flex; flex-direction:column; gap:3px; }
+  .ov-rarity-row {
+    display:flex; align-items:center; gap:7px; padding:3px 6px;
+    background:rgba(8,18,50,0.5); border-radius:4px;
+    border:1px solid rgba(232,201,106,0.07);
+  }
+  .ov-rarity-icon { font-size:11px; }
+  .ov-rarity-icon.rare-col { filter:hue-rotate(200deg) saturate(2); }
+  .ov-rarity-icon.epic-col { filter:hue-rotate(270deg) saturate(2); }
+  .ov-rarity-icon.legendary-col { filter:hue-rotate(30deg) saturate(2) brightness(1.3); }
+  .ov-rarity-icon.mythic-col { filter:hue-rotate(340deg) saturate(2.5) brightness(1.1); }
+  .ov-rarity-name {
+    font-family:'Cinzel',serif; font-size:8.5px; color:rgba(200,216,238,0.5);
+    letter-spacing:0.3px; text-transform:uppercase; flex:1;
+  }
+  .ov-rarity-val {
+    font-family:'Cinzel',serif; font-size:10px; font-weight:700;
+    color:rgba(200,216,238,0.55);
+  }
+
+  .ov-rarity-dot {
+    width:8px; height:8px; border-radius:50%; flex-shrink:0;
+  }
+  .cards-benefits-box {
+    background:rgba(6,14,36,0.92); border:1px solid rgba(232,201,106,0.22);
+    border-radius:8px; padding:8px 10px; display:flex; flex-direction:column;
+    align-items:center; gap:4px; flex-shrink:0;
+  }
+  .cards-benefits-title {
+    font-family:'Cinzel',serif; font-size:11px; font-weight:900;
+    color:var(--gold); letter-spacing:0.8px; text-align:center;
+    padding-bottom:6px; border-bottom:1px solid rgba(232,201,106,0.18); width:100%;
+  }
+  .cards-benefits-lock { font-size:22px; opacity:0.65; margin:4px 0 0; }
+  .cards-benefits-text {
+    font-family:'Crimson Pro',serif; font-size:10.5px; font-style:italic;
+    color:rgba(200,216,238,0.5); text-align:center; line-height:1.5;
+  }
+  .cards-benefits-soon {
+    font-family:'Cinzel',serif; font-size:9px; font-weight:900;
+    color:rgba(200,216,238,0.4); letter-spacing:1.2px; text-transform:uppercase;
+    margin-top:2px;
+  }
+
+  /* Coming Soon Popup */
+  #coming-soon-popup {
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,0.6); z-index:1000;
+    align-items:center; justify-content:center; backdrop-filter:blur(4px);
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-nav">
+      <div class="nav-item" onclick="window.location.href='index.html'">
+        <div class="nav-icon"><img alt="Home" src="assets/dashboard/icons/homes.png"/></div>
+        <div class="nav-label">Home</div>
+      </div>
+      <div class="nav-item" onclick="window.location.href='summon.html'">
+        <div class="nav-icon"><img alt="Summon" src="assets/dashboard/icons/summons.png"/></div>
+        <div class="nav-label">Summon</div>
+      </div>
+      <div class="nav-item" onclick="window.location.href='quests.html'">
+        <div class="nav-icon"><img alt="Quests" src="assets/dashboard/icons/quests.png"/></div>
+        <div class="nav-label">Quests</div>
+      </div>
+      <div class="nav-item" onclick="window.location.href='marketplace.html'">
+        <div class="nav-icon"><img alt="Marketplace" src="assets/dashboard/icons/marketplace.png"/></div>
+        <div class="nav-label">Marketplace</div>
+      </div>
+      <div class="nav-divider"><div class="nav-divider-gem"></div></div>
+      <div class="nav-item" onclick="window.location.href='buy.html'">
+        <div class="nav-icon"><img alt="Buy" src="assets/dashboard/icons/shops.png"/></div>
+        <div class="nav-label">Buy</div>
+      </div>
+      <div class="nav-item" onclick="window.location.href='codex.html'">
+        <div class="nav-icon"><img alt="Codex" src="assets/dashboard/icons/codex.png"/></div>
+        <div class="nav-label">Codex</div>
+      </div>
+      <div class="nav-item" onclick="window.location.href='info.html'">
+        <div class="nav-icon"><img alt="Info" src="assets/dashboard/icons/info.png"/></div>
+        <div class="nav-label">Info</div>
+      </div>
+      <div style="flex:1;"></div>
+      <div class="nav-divider"><div class="nav-divider-gem"></div></div>
+      <div class="nav-item active">
+        <div class="nav-icon"><img alt="Profile" src="assets/dashboard/icons/profile.png"/></div>
+        <div class="nav-label">Profile</div>
+      </div>
+    </div>
+    <div class="sidebar-portrait">
+      <div class="wolf-medallion">
+        <img alt="Loki" src="assets/dashboard/logoloki.jpg" style="width:100%;height:100%;object-fit:contain;opacity:0.85;"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER COLUMN -->
+  <div class="center-col">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="top-spacer"></div>
+      <div class="currency-group">
+        <div class="currency-pill">
+          <span><img alt="" src="assets/buy/wolfgold.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"/></span>
+          0 <div class="plus-btn">+</div>
+        </div>
+        <div class="currency-pill">
+          <span><img alt="" src="assets/buy/wolfcoin.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"/></span>
+          0 <div class="plus-btn">+</div>
+        </div>
+        <div class="energy-pill">
+          <span><img alt="energy" src="assets/dashboard/icons/energy.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"/></span>
+          0/180
+          <div class="plus-btn" style="background:rgba(160,96,255,0.8);color:white;">+</div>
+        </div>
+      </div>
+      <div class="top-spacer"></div>
+      <div class="connect-wallet-btn" onclick="document.getElementById('coming-soon-popup').style.display='flex'">
+        <span class="wallet-icon">⬡</span><span>Connect Wallet</span>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="body-row">
+      <div class="profile-content">
+
+        <!-- PROFILE BANNER -->
+        <div class="profile-banner">
+          <div class="banner-bg"></div>
+          <div class="banner-overlay"></div>
+          <div class="banner-inner">
+            <div class="avatar-wrap">
+              <div class="avatar-ring no-char" id="avatarRing" onclick="openCharSelect()">
+                <img alt="Avatar" id="avatarImg" src="" style="display:none;"/>
+                <div class="avatar-plus-icon">
+                  <span class="plus-sym">+</span>
+                  <span>Select</span>
+                </div>
+              </div>
+              <div class="avatar-level">Lv. 0</div>
+            </div>
+            <div class="banner-info">
+              <div class="banner-name">
+                <span id="bannerNameDisplay">Lone Hunter</span>
+                <input class="banner-name-input" id="bannerNameInput" value="Lone Hunter" style="display:none;" maxlength="20" onblur="finishEditName()" onkeydown="if(event.key==='Enter')this.blur()"/>
+                <div class="edit-btn" onclick="startEditName()" id="editNameBtn" title="Edit name">✎</div>
+              </div>
+              <div class="banner-title">The Wolf's Path</div>
+              <div class="banner-meta">
+                <div class="meta-item">
+                  <div class="meta-label">Hunter ID</div>
+                  <div class="meta-val">#LWT-742618</div>
+                </div>
+                <div class="meta-item">
+                  <div class="meta-label">Join Date</div>
+                  <div class="meta-val">May 2026</div>
+                </div>
+              </div>
+              <div class="exp-row">
+                <div class="exp-top"><span>EXP</span><span>0 / 500</span></div>
+                <div class="exp-bar"><div class="exp-fill" style="width:0%;"></div></div>
+              </div>
+            </div>
+            <div class="banner-stats">
+              <div class="bstat">
+                <div class="bstat-icon"><img src="assets/profile/icons/power.png" style="width:16px;height:16px;object-fit:contain;" onerror="this.parentElement.innerHTML='⚔️'"/></div>
+                <div><div class="bstat-label">Total Power</div><div class="bstat-val">???</div></div>
+              </div>
+              <div class="bstat">
+                <div class="bstat-icon"><img src="assets/profile/icons/wolf.png" style="width:16px;height:16px;object-fit:contain;" onerror="this.parentElement.innerHTML='🐺'"/></div>
+                <div><div class="bstat-label">Wolves Owned</div><div class="bstat-val">???</div></div>
+              </div>
+              <div class="bstat">
+                <div class="bstat-icon"><img src="assets/profile/icons/battle.png" style="width:16px;height:16px;object-fit:contain;" onerror="this.parentElement.innerHTML='🏆'"/></div>
+                <div><div class="bstat-label">Battles Won</div><div class="bstat-val">???</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB BAR -->
+        <div class="tab-bar">
+          <div class="tab-item active" onclick="switchTab('hunter',this)">
+            <img class="tab-icon" src="assets/profile/tabs/hunter.png" onerror="this.style.display='none'"/>
+            Hunter
+          </div>
+          <div class="tab-item" onclick="switchTab('inventory',this)">
+            <img class="tab-icon" src="assets/profile/tabs/inventory.png" onerror="this.style.display='none'"/>
+            Inventory
+          </div>
+          <div class="tab-item" onclick="switchTab('cards',this)">
+            <img class="tab-icon" src="assets/profile/tabs/cards.png" onerror="this.style.display='none'"/>
+            Cards
+          </div>
+          <div class="tab-item" onclick="switchTab('records',this)">
+            <img class="tab-icon" src="assets/profile/tabs/records.png" onerror="this.style.display='none'"/>
+            Records
+          </div>
+        </div>
+
+        <!-- TAB PANELS -->
+        <div class="tab-panels">
+
+          <!-- HUNTER TAB -->
+          <div class="tab-panel active" id="tab-hunter">
+            <div class="hunter-panel">
+
+              <!-- LEFT: Character Card -->
+              <div class="char-card" id="charCard">
+                <div class="char-art" id="charArt" style="display:none;">
+                  <img alt="" id="charCardImg" src=""/>
+                  <div class="char-art-overlay"></div>
+                  <div class="char-name-area">
+                    <div class="char-name" id="charCardName"></div>
+                    <div class="char-stars">
+                      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <div class="char-element" id="charCardElement"></div>
+                  </div>
+                </div>
+                <!-- Empty state -->
+                <div id="charEmpty" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0.35;">
+                  <div style="font-size:36px;">⚔️</div>
+                  <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold-light);letter-spacing:1px;text-align:center;">NO CHARACTER<br>SELECTED</div>
+                </div>
+              </div>
+
+              <!-- MIDDLE: Stats -->
+              <div class="stats-panel">
+                <div class="stats-title">Stats</div>
+                <!-- Stat bar visual replacing hexagon -->
+                <div style="display:flex;flex-direction:column;gap:5px;padding:4px 2px 6px;flex-shrink:0;">
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div style="font-family:'Cinzel',serif;font-size:7px;color:rgba(232,201,106,0.7);width:28px;text-align:right;letter-spacing:0.3px;">HP</div>
+                    <div style="flex:1;height:5px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;border:1px solid rgba(232,201,106,0.1);">
+                      <div style="width:0%;height:100%;background:linear-gradient(90deg,#c14a4a,#e87070);border-radius:3px;box-shadow:0 0 6px rgba(220,80,80,0.5);"></div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div style="font-family:'Cinzel',serif;font-size:7px;color:rgba(232,201,106,0.7);width:28px;text-align:right;letter-spacing:0.3px;">ATK</div>
+                    <div style="flex:1;height:5px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;border:1px solid rgba(232,201,106,0.1);">
+                      <div style="width:0%;height:100%;background:linear-gradient(90deg,#c87820,#f0a030);border-radius:3px;box-shadow:0 0 6px rgba(220,140,40,0.5);"></div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div style="font-family:'Cinzel',serif;font-size:7px;color:rgba(232,201,106,0.7);width:28px;text-align:right;letter-spacing:0.3px;">DEF</div>
+                    <div style="flex:1;height:5px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;border:1px solid rgba(232,201,106,0.1);">
+                      <div style="width:0%;height:100%;background:linear-gradient(90deg,#2a6aa0,#4a9cd0);border-radius:3px;box-shadow:0 0 6px rgba(60,140,200,0.5);"></div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div style="font-family:'Cinzel',serif;font-size:7px;color:rgba(232,201,106,0.7);width:28px;text-align:right;letter-spacing:0.3px;">CRIT</div>
+                    <div style="flex:1;height:5px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;border:1px solid rgba(232,201,106,0.1);">
+                      <div style="width:0%;height:100%;background:linear-gradient(90deg,#8040c0,#b070f0);border-radius:3px;box-shadow:0 0 6px rgba(140,80,220,0.5);"></div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div style="font-family:'Cinzel',serif;font-size:7px;color:rgba(232,201,106,0.7);width:28px;text-align:right;letter-spacing:0.3px;">SPD</div>
+                    <div style="flex:1;height:5px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;border:1px solid rgba(232,201,106,0.1);">
+                      <div style="width:0%;height:100%;background:linear-gradient(90deg,#20a060,#40d090);border-radius:3px;box-shadow:0 0 6px rgba(40,180,110,0.5);"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="stats-list">
+                  <div class="stat-row">
+                    <img class="stat-row-icon" src="assets/profile/icons/hp.png" onerror="this.style.display='none'"/>
+                    <div class="stat-row-name">HP</div>
+                    <div class="stat-row-val">???</div>
+                  </div>
+                  <div class="stat-row">
+                    <img class="stat-row-icon" src="assets/profile/icons/atk.png" onerror="this.style.display='none'"/>
+                    <div class="stat-row-name">ATK</div>
+                    <div class="stat-row-val">???</div>
+                  </div>
+                  <div class="stat-row">
+                    <img class="stat-row-icon" src="assets/profile/icons/def.png" onerror="this.style.display='none'"/>
+                    <div class="stat-row-name">DEF</div>
+                    <div class="stat-row-val">???</div>
+                  </div>
+                  <div class="stat-row">
+                    <img class="stat-row-icon" src="assets/profile/icons/crit.png" onerror="this.style.display='none'"/>
+                    <div class="stat-row-name">Crit Rate</div>
+                    <div class="stat-row-val">???</div>
+                  </div>
+                  <div class="stat-row">
+                    <img class="stat-row-icon" src="assets/profile/icons/critdmg.png" onerror="this.style.display='none'"/>
+                    <div class="stat-row-name">Crit DMG</div>
+                    <div class="stat-row-val">???</div>
+                  </div>
+                  <div class="stat-row">
+                    <img class="stat-row-icon" src="assets/profile/icons/energy.png" onerror="this.style.display='none'"/>
+                    <div class="stat-row-name">Energy Recovery</div>
+                    <div class="stat-row-val">???</div>
+                  </div>
+                  <div class="stat-row">
+                    <img class="stat-row-icon" src="assets/profile/icons/speed.png" onerror="this.style.display='none'"/>
+                    <div class="stat-row-name">Speed</div>
+                    <div class="stat-row-val">???</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RIGHT: Character Info -->
+              <div class="info-panel">
+                <div class="info-section-title">Character Info</div>
+                <div class="info-divider"></div>
+
+                <div class="info-row">
+                  <img class="info-row-icon" src="assets/profile/elements/ice.png" onerror="this.innerHTML='❄️'"/>
+                  <div class="info-row-content">
+                    <div class="info-row-label">Element</div>
+                    <div class="info-row-val" id="infoElement">Water + Ice</div>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <img class="info-row-icon" src="assets/profile/icons/role.png" onerror="this.style.display='none'"/>
+                  <div class="info-row-content">
+                    <div class="info-row-label">Role</div>
+                    <div class="info-row-val">Ranged DPS</div>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <img class="info-row-icon" src="assets/profile/icons/weapon.png" onerror="this.style.display='none'"/>
+                  <div class="info-row-content">
+                    <div class="info-row-label">Weapon</div>
+                    <div class="info-row-val" id="infoWeapon">Arcane Staff</div>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <img class="info-row-icon" src="assets/profile/wolves/frostclaw.png" style="border-radius:50%;" onerror="this.style.display='none'"/>
+                  <div class="info-row-content">
+                    <div class="info-row-label">Equipped Wolf</div>
+                    <div class="info-row-val">Frostclaw</div>
+                  </div>
+                </div>
+
+                <!-- Affinity -->
+                <div class="affinity-row">
+                  <img class="info-row-icon" src="assets/profile/icons/affinity.png" onerror="this.style.fontSize='14px';this.textContent='💜'"/>
+                  <div class="affinity-bar-wrap">
+                    <div class="info-row-label">Affinity — Lv.0 (0%)</div>
+                    <div class="affinity-bar">
+                      <div class="affinity-fill" style="width:0%;background:linear-gradient(90deg,#7a40c8,#a060ff);"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Energy -->
+                <div class="affinity-row">
+                  <img class="info-row-icon" src="assets/dashboard/icons/energy.png" onerror="this.style.display='none'"/>
+                  <div class="energy-bar-wrap">
+                    <div class="info-row-label">Energy — 0 / 100</div>
+                    <div class="energy-bar">
+                      <div class="energy-fill" style="width:0%;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-divider"></div>
+                <div class="story-box">
+                  <div class="story-title">Character Story</div>
+                  <div class="story-text">Luna, the Frost Huntress, wanders the moonlit wilds with her faithful companion, Frostclaw. Born into the northern tribes, she was chosen by the moon to wield the ancient ice. Her arrow never misses. Her heart, never wavers.</div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- /hunter tab -->
+
+          <!-- INVENTORY TAB -->
+          <div class="tab-panel" id="tab-inventory">
+            <div style="width:100%;height:100%;display:flex;gap:6px;padding:2px 0;overflow:hidden;">
+
+              <!-- LEFT: Inventory Grid -->
+              <div style="width:240px;flex-shrink:0;height:100%;border-radius:8px;overflow:hidden;position:relative;">
+                <img src="assets/profile/inventory_left.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;"/>
+              </div>
+
+              <!-- CENTER: Item Preview -->
+              <div style="width:200px;flex-shrink:0;height:100%;border-radius:8px;overflow:hidden;">
+                <img src="assets/profile/inventory_center.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;"/>
+              </div>
+
+              <!-- RIGHT: 2 stacked panels -->
+              <div style="flex:1;min-width:0;height:100%;display:flex;flex-direction:column;gap:6px;">
+
+                <!-- RIGHT TOP -->
+                <div style="flex:1;min-height:0;border-radius:8px;overflow:hidden;">
+                  <img src="assets/profile/inventory_right_top.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;"/>
+                </div>
+
+                <!-- RIGHT BOTTOM -->
+                <div style="flex:1;min-height:0;border-radius:8px;overflow:hidden;">
+                  <img src="assets/profile/inventory_right_bottom.jpg" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;"/>
+                </div>
+
+              </div><!-- /right col -->
+            </div>
+          </div>
+
+          <!-- CARDS TAB -->
+          <div class="tab-panel" id="tab-cards">
+            <div class="cards-panel">
+
+              <!-- LEFT: Card Filter -->
+              <div class="cards-filter-col">
+                <div class="cards-filter-title">Card Filter</div>
+
+                <div class="filter-type-list">
+                  <div class="filter-type-item active" onclick="filterCards('all',this)">
+                    <span class="filter-type-icon">◆</span>
+                    <span class="filter-type-label">All Cards</span>
+                    <span class="filter-type-count">0</span>
+                  </div>
+                  <div class="filter-type-item" onclick="filterCards('wolves',this)">
+                    <span class="filter-type-icon"></span>
+                    <span class="filter-type-label">Wolves</span>
+                    <span class="filter-type-count">0</span>
+                  </div>
+                  <div class="filter-type-item" onclick="filterCards('hunters',this)">
+                    <span class="filter-type-icon"></span>
+                    <span class="filter-type-label">Hunters</span>
+                    <span class="filter-type-count">0</span>
+                  </div>
+                  <div class="filter-type-item" onclick="filterCards('weapons',this)">
+                    <span class="filter-type-icon"></span>
+                    <span class="filter-type-label">Weapons</span>
+                    <span class="filter-type-count">0</span>
+                  </div>
+                  <div class="filter-type-item" onclick="filterCards('artifacts',this)">
+                    <span class="filter-type-icon"></span>
+                    <span class="filter-type-label">Artifacts</span>
+                    <span class="filter-type-count">0</span>
+                  </div>
+                  <div class="filter-type-item" onclick="filterCards('skills',this)">
+                    <span class="filter-type-icon"></span>
+                    <span class="filter-type-label">Skills</span>
+                    <span class="filter-type-count">0</span>
+                  </div>
+                </div>
+
+                <div class="filter-rarity-section">
+                  <div class="filter-rarity-title">Rarity</div>
+                  <div class="filter-rarity-list">
+                    <label class="rarity-check-row">
+                      <input type="checkbox" checked onchange="filterRarity()"/>
+                      <span class="rarity-checkbox-box checked"></span>
+                      <span class="rarity-label">All</span>
+                    </label>
+                    <label class="rarity-check-row">
+                      <input type="checkbox" onchange="filterRarity()"/>
+                      <span class="rarity-checkbox-box"></span>
+                      <span class="rarity-label">Common</span>
+                    </label>
+                    <label class="rarity-check-row">
+                      <input type="checkbox" onchange="filterRarity()"/>
+                      <span class="rarity-checkbox-box rare"></span>
+                      <span class="rarity-label">Rare</span>
+                    </label>
+                    <label class="rarity-check-row">
+                      <input type="checkbox" onchange="filterRarity()"/>
+                      <span class="rarity-checkbox-box epic"></span>
+                      <span class="rarity-label">Epic</span>
+                    </label>
+                    <label class="rarity-check-row">
+                      <input type="checkbox" onchange="filterRarity()"/>
+                      <span class="rarity-checkbox-box legendary"></span>
+                      <span class="rarity-label">Legendary</span>
+                    </label>
+                    <label class="rarity-check-row">
+                      <input type="checkbox" onchange="filterRarity()"/>
+                      <span class="rarity-checkbox-box mythic"></span>
+                      <span class="rarity-label">Mythic</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CENTER: Cards Collection -->
+              <div class="cards-center-col">
+                <div class="cards-collection-header">
+                  <div class="cards-collection-title">Cards Collection</div>
+                  <div class="cards-sort-row">
+                    <span class="cards-sort-label">Sort By</span>
+                    <select class="cards-sort-select">
+                      <option>Newest</option>
+                      <option>Oldest</option>
+                      <option>Rarity</option>
+                      <option>Name</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Card Grid -->
+                <div class="cards-grid">
+                  <div class="card-slot"><img src="assets/cards/wolfcardsloki.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;"/></div>
+                  <div class="card-slot"><img src="assets/cards/wolfcardsloki.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;"/></div>
+                  <div class="card-slot"><img src="assets/cards/wolfcardsloki.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;"/></div>
+                  <div class="card-slot"><img src="assets/cards/wolfcardsloki.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;"/></div>
+                  <div class="card-slot"><img src="assets/cards/wolfcardsloki.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;"/></div>
+                  <div class="card-slot"><img src="assets/cards/wolfcardsloki.png" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:7px;"/></div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="cards-pagination">
+                  <div class="page-btn">&#8249;</div>
+                  <div class="page-indicator">1 / 1</div>
+                  <div class="page-btn">&#8250;</div>
+                </div>
+
+                <!-- Footer note -->
+                <div class="cards-footer-note">
+                  <span class="cards-footer-deco">◇──</span>
+                  <span>ⓘ More features and contents will be available soon.</span>
+                  <span class="cards-footer-deco">──◇</span>
+                </div>
+              </div>
+
+              <!-- RIGHT: Overview + Benefits -->
+              <div class="cards-right-col">
+
+                <!-- Collection Overview -->
+                <div class="cards-overview-box">
+                  <div class="cards-overview-title">Collection Overview</div>
+                  <div class="cards-overview-emblem">
+                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="40" cy="40" r="38" stroke="rgba(232,201,106,0.35)" stroke-width="1"/>
+                      <circle cx="40" cy="40" r="30" stroke="rgba(232,201,106,0.2)" stroke-width="0.5"/>
+                      <!-- compass lines -->
+                      <line x1="40" y1="4" x2="40" y2="76" stroke="rgba(232,201,106,0.2)" stroke-width="0.5"/>
+                      <line x1="4" y1="40" x2="76" y2="40" stroke="rgba(232,201,106,0.2)" stroke-width="0.5"/>
+                      <line x1="12" y1="12" x2="68" y2="68" stroke="rgba(232,201,106,0.12)" stroke-width="0.5"/>
+                      <line x1="68" y1="12" x2="12" y2="68" stroke="rgba(232,201,106,0.12)" stroke-width="0.5"/>
+                      <!-- card icon in center -->
+                      <rect x="30" y="26" width="20" height="28" rx="3" stroke="rgba(232,201,106,0.7)" stroke-width="1.5" fill="rgba(232,201,106,0.08)"/>
+                      <polygon points="40,34 44,42 36,42" fill="rgba(232,201,106,0.6)"/>
+                      <!-- corner markers -->
+                      <polygon points="40,6 42,10 40,14 38,10" fill="rgba(232,201,106,0.5)"/>
+                      <polygon points="74,40 70,42 66,40 70,38" fill="rgba(232,201,106,0.5)"/>
+                      <polygon points="40,74 42,70 40,66 38,70" fill="rgba(232,201,106,0.5)"/>
+                      <polygon points="6,40 10,42 14,40 10,38" fill="rgba(232,201,106,0.5)"/>
+                    </svg>
+                  </div>
+                  <div class="cards-overview-count">0 / 0</div>
+                  <div class="cards-overview-label">Cards Collected</div>
+                  <div class="cards-overview-rarity-list">
+                    <div class="ov-rarity-row"><span class="ov-rarity-dot" style="background:#a0a8b8;"></span><span class="ov-rarity-name">Common</span><span class="ov-rarity-val">0</span></div>
+                    <div class="ov-rarity-row"><span class="ov-rarity-dot" style="background:#4ab870;"></span><span class="ov-rarity-name">Uncommon</span><span class="ov-rarity-val">0</span></div>
+                    <div class="ov-rarity-row"><span class="ov-rarity-dot" style="background:#4a90d9;"></span><span class="ov-rarity-name">Rare</span><span class="ov-rarity-val">0</span></div>
+                    <div class="ov-rarity-row"><span class="ov-rarity-dot" style="background:#a060e8;"></span><span class="ov-rarity-name">Epic</span><span class="ov-rarity-val">0</span></div>
+                    <div class="ov-rarity-row"><span class="ov-rarity-dot" style="background:#e8a020;"></span><span class="ov-rarity-name">Legendary</span><span class="ov-rarity-val">0</span></div>
+                    <div class="ov-rarity-row"><span class="ov-rarity-dot" style="background:#e04040;"></span><span class="ov-rarity-name">Mythic</span><span class="ov-rarity-val">0</span></div>
+                  </div>
+                </div>
+
+                <!-- Card Benefits -->
+                <div class="cards-benefits-box">
+                  <div class="cards-benefits-title">Card Benefits</div>
+                  <div class="cards-benefits-text" style="font-size:9.5px;line-height:1.4;">Collect cards to unlock powerful bonuses and passive effects.</div>
+                  <div class="cards-benefits-soon">Coming Soon</div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <!-- RECORDS TAB (kosong) -->
+          <div class="tab-panel" id="tab-records"></div>
+
+        </div><!-- /tab-panels -->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Character Select Modal -->
+<div id="char-select-modal" onclick="closeCharSelect(event)">
+  <div class="char-modal-box" onclick="event.stopPropagation()">
+    <div class="char-modal-close" onclick="closeCharSelect()">✕</div>
+    <div class="char-modal-title">SELECT CHARACTER</div>
+    <div class="char-modal-sub">Choose your profile character</div>
+    <div class="char-grid">
+
+      <!-- Luna -->
+      <div class="char-option" id="char-opt-luna" onclick="selectChar('luna')">
+        <div class="char-option-avatar">
+          <img src="assets/dashboard/chars/luna.jpg" onerror="this.style.display='none'"/>
+        </div>
+        <div class="char-option-name">Luna</div>
+        <div class="char-option-element">Water + Ice</div>
+      </div>
+
+      <!-- Orion -->
+      <div class="char-option" id="char-opt-orion" onclick="selectChar('orion')">
+        <div class="char-option-avatar">
+          <img src="assets/dashboard/chars/orion.jpg" onerror="this.style.display='none'"/>
+        </div>
+        <div class="char-option-name">Orion</div>
+        <div class="char-option-element">Terra + Nature</div>
+      </div>
+
+      <!-- Kael -->
+      <div class="char-option" id="char-opt-kael" onclick="selectChar('kael')">
+        <div class="char-option-avatar">
+          <img src="assets/dashboard/chars/kael.jpg" onerror="this.style.display='none'"/>
+        </div>
+        <div class="char-option-name">Kael</div>
+        <div class="char-option-element">Fire + Magma</div>
+      </div>
+
+      <!-- Iris -->
+      <div class="char-option" id="char-opt-iris" onclick="selectChar('iris')">
+        <div class="char-option-avatar">
+          <img src="assets/dashboard/chars/iris.jpg" onerror="this.style.display='none'"/>
+        </div>
+        <div class="char-option-name">Iris</div>
+        <div class="char-option-element">Wind + Sand</div>
+      </div>
+
+    </div>
+    <div class="char-modal-confirm" onclick="confirmCharSelect()">✔ Confirm Selection</div>
+  </div>
+</div>
+
+<!-- Coming Soon Popup -->
+<div id="coming-soon-popup" onclick="this.style.display='none'">
+  <div onclick="event.stopPropagation()" style="background:linear-gradient(160deg,rgba(8,18,46,0.98),rgba(12,26,60,0.98));border:1px solid rgba(232,201,106,0.35);border-radius:14px;padding:28px 32px;text-align:center;min-width:220px;box-shadow:0 0 40px rgba(74,140,255,0.2);">
+    <div style="font-size:28px;margin-bottom:10px;">👤</div>
+    <div style="font-family:'Cinzel',serif;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;margin-bottom:6px;">Coming Soon</div>
+    <div style="font-size:11px;color:rgba(180,210,240,0.65);font-family:'Crimson Pro',serif;font-style:italic;line-height:1.5;">Profile features will be<br/>available at launch.</div>
+    <div onclick="document.getElementById('coming-soon-popup').style.display='none'" style="margin-top:18px;padding:7px 24px;background:linear-gradient(135deg,rgba(30,70,180,0.7),rgba(50,100,220,0.5));border:1px solid rgba(106,180,255,0.35);border-radius:7px;font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:#fff;cursor:pointer;">Got it</div>
+  </div>
+</div>
+
+<script>
+function switchTab(name, el) {
+  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ── Character Select ──────────────────────────────────────────
+const charData = {
+  luna:  { name:'Luna',  src:'assets/dashboard/chars/luna.jpg',  element:'Water + Ice',   elementIcon:'assets/profile/elements/ice.png',    weapon:'Arcane Staff'   },
+  kael:  { name:'Kael',  src:'assets/dashboard/chars/kael.jpg',  element:'Fire + Magma',  elementIcon:'assets/profile/elements/fire.png',   weapon:'Blazing Sword'  },
+  iris:  { name:'Iris',  src:'assets/dashboard/chars/iris.jpg',  element:'Wind + Sand',   elementIcon:'assets/profile/elements/thunder.png',weapon:'Twin Chakrams'  },
+  orion: { name:'Orion', src:'assets/dashboard/chars/orion.jpg', element:'Terra + Nature',elementIcon:'assets/profile/elements/dark.png',   weapon:'Gale Bow'       },
+};
+
+let selectedChar = null;
+let pendingChar  = null;
+
+function openCharSelect() {
+  // reset pending to current or default
+  pendingChar = selectedChar || 'luna';
+  document.querySelectorAll('.char-option').forEach(el => el.classList.remove('selected'));
+  const opt = document.getElementById('char-opt-' + pendingChar);
+  if (opt) opt.classList.add('selected');
+  document.getElementById('char-select-modal').classList.add('open');
+}
+
+function closeCharSelect(e) {
+  if (!e || e.target === document.getElementById('char-select-modal')) {
+    document.getElementById('char-select-modal').classList.remove('open');
+  }
+}
+
+function selectChar(key) {
+  pendingChar = key;
+  document.querySelectorAll('.char-option').forEach(el => el.classList.remove('selected'));
+  document.getElementById('char-opt-' + key).classList.add('selected');
+}
+
+function confirmCharSelect() {
+  selectedChar = pendingChar;
+  const data = charData[selectedChar];
+
+  // ── Update avatar ring ──
+  const ring = document.getElementById('avatarRing');
+  const img  = document.getElementById('avatarImg');
+  img.src = data.src;
+  img.style.display = 'block';
+  img.onerror = function() { this.style.display = 'none'; };
+  ring.classList.remove('no-char');
+  ring.querySelector('.avatar-plus-icon .plus-sym').textContent = '✎';
+  ring.querySelector('.avatar-plus-icon span:last-child').textContent = 'Change';
+
+  // ── Update char card ──
+  const cardImg   = document.getElementById('charCardImg');
+  const cardName  = document.getElementById('charCardName');
+  const cardEl    = document.getElementById('charCardElement');
+  const charArt   = document.getElementById('charArt');
+  const charEmpty = document.getElementById('charEmpty');
+  cardImg.src  = data.src;
+  cardImg.alt  = data.name;
+  cardName.textContent = data.name;
+  cardEl.innerHTML = `<img src="${data.elementIcon}" onerror="this.style.display='none'"/> ${data.element}`;
+  charArt.style.display   = 'flex';
+  charEmpty.style.display = 'none';
+
+  // ── Update info panel ──
+  const elEl = document.getElementById('infoElement');
+  const wpEl = document.getElementById('infoWeapon');
+  if (elEl) elEl.textContent = data.element;
+  if (wpEl) wpEl.textContent = data.weapon;
+
+  document.getElementById('char-select-modal').classList.remove('open');
+}
+
+// ── Cards Filter ──────────────────────────────────────────────
+function filterCards(type, el) {
+  document.querySelectorAll('.filter-type-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+}
+function filterRarity() { /* placeholder for future logic */ }
+
+// ── Name Edit ─────────────────────────────────────────────────
+function startEditName() {
+  const display = document.getElementById('bannerNameDisplay');
+  const input   = document.getElementById('bannerNameInput');
+  const btn     = document.getElementById('editNameBtn');
+  input.value = display.textContent;
+  display.style.display = 'none';
+  input.style.display   = 'inline-block';
+  btn.textContent = '✔';
+  btn.onclick = finishEditName;
+  input.focus(); input.select();
+}
+
+function finishEditName() {
+  const display = document.getElementById('bannerNameDisplay');
+  const input   = document.getElementById('bannerNameInput');
+  const btn     = document.getElementById('editNameBtn');
+  const val = input.value.trim() || display.textContent;
+  display.textContent   = val;
+  display.style.display = 'inline';
+  input.style.display   = 'none';
+  btn.textContent = '✎';
+  btn.onclick = startEditName;
+}
+
+
+
+</script>
+<script src="sidebar.js"></script>
+<script>loadSidebar('profile');</script>
+</body>
+</html>
