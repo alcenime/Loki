@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loki The Wolf - Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#e8c96a;--gold-light:#f5dfa0;--gold-dark:#b8962a;--blue-deep:#0a1628;--blue-mid:#112240;--blue-bright:#1e4080;--blue-sky:#4a90d9;--blue-glow:#6ab4ff;--silver:#c8d8ee;--white:#f0f4ff;--line:rgba(232,201,106,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#050b1c url(assets/dashboard/backgroundloki.png) center/cover fixed;color:var(--silver);font:18px/1.7 'Crimson Pro',serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(5,11,28,.9),rgba(8,18,40,.94));z-index:-1}
+a{color:inherit;text-decoration:none}
+.top{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:10px 18px;background:rgba(5,11,28,.92);border-bottom:1px solid var(--line);backdrop-filter:blur(6px)}
+.btn{font:600 12px 'Rajdhani',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);background:rgba(10,22,40,.6);border:1px solid var(--gold-dark);border-radius:6px;padding:7px 12px;cursor:pointer;transition:box-shadow .2s,border-color .2s}
+.btn:hover,.btn:focus-visible{border-color:var(--gold);box-shadow:0 0 10px rgba(106,180,255,.35);outline:none}
+.top-c{text-align:center}
+.top-c b{display:block;font:700 20px 'Cinzel',serif;letter-spacing:.2em;color:var(--gold)}
+.top-c span{font:600 11px 'Rajdhani',sans-serif;letter-spacing:.3em;color:var(--blue-glow)}
+#menuBtn{display:none;justify-self:end}
+.tag{text-align:center;font-style:italic;padding:18px 16px 0;color:var(--silver)}
+.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:34px;max-width:1180px;margin:0 auto;padding:20px 18px 40px}
+nav{position:sticky;top:84px;align-self:start;max-height:calc(100vh - 100px);overflow-y:auto;padding:14px;border:1px solid var(--line);border-radius:8px;background:rgba(10,22,40,.75)}
+nav h3{display:flex;align-items:center;gap:8px;font:700 13px 'Cinzel',serif;letter-spacing:.12em;color:var(--gold);padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+nav h3 img{width:26px;height:26px;object-fit:contain}
+nav a{display:block;padding:6px 8px;margin:1px 0;font:500 14px 'Rajdhani',sans-serif;letter-spacing:.04em;border-left:2px solid transparent;color:var(--silver)}
+nav a:hover{color:var(--white)}
+nav a.on{color:var(--gold);border-left-color:var(--gold);background:rgba(30,64,128,.25)}
+main{min-width:0}
+section{scroll-margin-top:84px;padding:34px 0;border-bottom:1px solid var(--line)}
+section:first-child{padding-top:10px}
+.n{font:600 13px 'Rajdhani',sans-serif;letter-spacing:.3em;color:var(--gold-dark)}
+h2{font:700 30px/1.2 'Cinzel',serif;color:var(--gold-light);margin:2px 0 16px;text-shadow:0 0 18px rgba(106,180,255,.25)}
+h3.s{font:700 16px 'Cinzel',serif;color:var(--gold);margin:20px 0 6px;letter-spacing:.05em}
+p{margin-bottom:14px;max-width:72ch}
+strong{color:var(--white);font-weight:600}
+.quote{border-left:3px solid var(--gold);background:rgba(17,34,64,.55);padding:12px 18px;margin:18px 0;font-style:italic;color:var(--white);max-width:72ch}
+.flow{display:flex;align-items:stretch;gap:8px;margin:20px 0;flex-wrap:wrap}
+.flow div{flex:1 1 130px;text-align:center;padding:14px 10px;border:1px solid var(--gold-dark);border-radius:8px;background:rgba(17,34,64,.7);font:700 14px 'Cinzel',serif;letter-spacing:.1em;color:var(--gold)}
+.flow i{align-self:center;color:var(--blue-glow);font-style:normal;font-size:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:16px 0}
+.card{border:1px solid var(--line);border-radius:8px;background:rgba(17,34,64,.55);padding:14px 16px}
+.card b{display:block;font:700 14px 'Cinzel',serif;color:var(--gold);margin-bottom:4px}
+.card small{display:block;font:600 11px 'Rajdhani',sans-serif;letter-spacing:.25em;color:var(--blue-glow);margin-bottom:2px}
+.card p{font-size:16px;line-height:1.55;margin:0}
+.ph{border:1px dashed var(--gold-dark);border-radius:8px;padding:14px 18px;margin:18px 0;background:rgba(10,22,40,.6)}
+.ph b{font:700 13px 'Cinzel',serif;letter-spacing:.15em;color:var(--gold)}
+details{border:1px solid var(--line);border-radius:8px;background:rgba(17,34,64,.45);margin-bottom:8px}
+summary{cursor:pointer;padding:12px 16px;font:700 14px 'Cinzel',serif;color:var(--gold-light);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";float:right;color:var(--gold)}
+details[open] summary::after{content:"-"}
+details p{padding:0 16px;font-size:16px;margin-bottom:12px}
+footer{text-align:center;padding:30px 16px 40px;border-top:1px solid var(--line)}
+footer b{font:700 20px 'Cinzel',serif;letter-spacing:.2em;color:var(--gold)}
+footer p{margin:6px auto 14px;font-style:italic}
+footer a{display:inline-block;margin:0 6px}
+@media(max-width:860px){
+.wrap{grid-template-columns:1fr;padding-top:10px}
+#menuBtn{display:block}
+nav{position:fixed;top:58px;left:0;bottom:0;width:260px;max-height:none;z-index:25;border-radius:0 8px 8px 0;transform:translateX(-105%);transition:transform .25s;background:rgba(5,11,28,.98)}
+nav.open{transform:none}
+.top-c b{font-size:15px;letter-spacing:.12em}
+.top-c span{font-size:9px}
+h2{font-size:24px}
+body{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top">
+<button class="btn" id="back" type="button">&larr; Back to Info</button>
+<div class="top-c"><b>LOKI THE WOLF</b><span>DOCUMENTATION</span></div>
+<button class="btn" id="menuBtn" type="button" aria-label="Open menu">Menu</button>
+</header>
+<p class="tag">Everything you need to know about the world, the Sigil, the Summon, and the Wolves.</p>
+<div class="wrap">
+<nav id="nav">
+<h3><img src="assets/dashboard/logoloki.png" alt="" onerror="this.style.display='none'">LOKI THE WOLF</h3>
+<a href="#s1">01 — Introduction</a><a href="#s2">02 — The World</a><a href="#s3">03 — Loki Sigil</a><a href="#s4">04 — Summon</a><a href="#s5">05 — Wolf Collection</a><a href="#s6">06 — Rarity &amp; Traits</a><a href="#s7">07 — Quests</a><a href="#s8">08 — Marketplace</a><a href="#s9">09 — Reveal</a><a href="#s10">10 — Roadmap</a><a href="#s11">11 — FAQ</a>
+</nav>
+<main>
+
+<section id="s1"><div class="n">01</div><h2>Introduction</h2>
+<p><strong>Loki The Wolf</strong> is a fantasy NFT collection built around a mysterious Wolf and the world that surrounds it. It is not meant to be a set of profile images. It is a journey with a clear shape, and every NFT is a step along it.</p>
+<div class="flow"><div>LOKI SIGIL</div><i>&rarr;</i><div>SUMMON</div><i>&rarr;</i><div>WOLF</div><i>&rarr;</i><div>THE HUNT</div></div>
+<p>Each stage has its own role. The Sigil is where the journey begins, the Summon is the ritual that brings a Wolf forth, the Wolf is the creature you collect, and the Hunt is everything that follows once you hold one.</p>
+<p>The people who enter this world are called <strong>Hunters</strong>. A Hunter finds Sigils, summons Wolves, builds a collection, and over time takes part in the activities that grow around the world of Loki.</p></section>
+
+<section id="s2"><div class="n">02</div><h2>The World of Loki</h2>
+<p>Loki The Wolf is set in a fantasy world of ancient places, hidden forces, Wolves, and Hunters. It is old and mostly unexplored, and it is revealed gradually rather than all at once.</p>
+<p>The collection is designed so the NFT is the way in, not the end of the experience. Owning a Wolf or a Sigil is the moment you step into the world, and the world is built to keep expanding after that.</p>
+<div class="grid">
+<div class="card"><b>The Hunter</b><p>You, the collector. The Hunter enters the world, seeks Sigils, and summons Wolves.</p></div>
+<div class="card"><b>The Wolf</b><p>The central creature of the collection. Every Wolf carries its own identity.</p></div>
+<div class="card"><b>The Realms</b><p>Ancient, unexplored environments that can be opened up over time. No specific locations are official yet.</p></div></div></section>
+
+<section id="s3"><div class="n">03</div><h2>Loki Sigil</h2>
+<p>The <strong>Loki Sigil</strong> is a special NFT artifact connected to the Wolf Summon system. It exists to be the starting point of the journey.</p>
+<div class="flow"><div>LOKI SIGIL</div><i>&rarr;</i><div>SUMMON</div><i>&rarr;</i><div>WOLF</div></div>
+<p>A Sigil is not just another collectible image. It represents access to the Summon. Holding one means you hold the key to begin, and that is what separates it from the Wolves that come after it.</p>
+<div class="quote">The Sigil is the beginning. It is how a Hunter earns the right to call a Wolf.</div>
+<p>Details such as supply and exact mechanics will be published here once they are final. Nothing in this page should be read as a confirmed number.</p></section>
+
+<section id="s4"><div class="n">04</div><h2>The Summon</h2>
+<p>The Summon is the process that turns a Sigil into a Wolf. It follows six steps.</p>
+<div class="grid">
+<div class="card"><small>STEP 01</small><b>Own a Loki Sigil</b><p>Every Summon starts with a Sigil in your wallet.</p></div>
+<div class="card"><small>STEP 02</small><b>Enter Summon</b><p>Open the Summon page to begin the ritual.</p></div>
+<div class="card"><small>STEP 03</small><b>Select your Sigil</b><p>Choose which Sigil you want to use.</p></div>
+<div class="card"><small>STEP 04</small><b>Initiate the Summon</b><p>Confirm to start. The Wolf is called forth.</p></div>
+<div class="card"><small>STEP 05</small><b>Awaken the Wolf</b><p>The Summon completes and the Wolf awakens.</p></div>
+<div class="card"><small>STEP 06</small><b>Reveal</b><p>The Wolf becomes part of your collection.</p></div></div>
+<div class="quote">The Sigil is the beginning. The Wolf is what awaits beyond the Summon.</div>
+<p>Technical details are still being finalized, so this section describes the flow rather than exact mechanics.</p></section>
+
+<section id="s5"><div class="n">05</div><h2>The Wolf Collection</h2>
+<p>Wolf NFTs are the heart of the project. Each Wolf is a collectible you own outright, with its own visual identity and its own place in the collection.</p>
+<p>No two Wolves need to look alike. Differences in appearance, traits, and rarity give each one individuality, and they are what make collecting meaningful: you are looking for the Wolves that speak to you, not just filling a set.</p>
+<p>Because Wolves are NFTs, they can be held, shown, and traded by collectors. Their value on the secondary market is set by collectors, not by the project.</p></section>
+
+<section id="s6"><div class="n">06</div><h2>Rarity &amp; Traits</h2>
+<p><strong>Rarity</strong> is the overall classification of a Wolf, showing how uncommon it is within the collection. <strong>Traits</strong> are the individual visual characteristics that make up that Wolf.</p>
+<h3 class="s">Trait categories</h3>
+<div class="grid">
+<div class="card"><b>Appearance</b><p>The Wolf's overall look and form.</p></div>
+<div class="card"><b>Accessories</b><p>Items and adornments the Wolf carries.</p></div>
+<div class="card"><b>Markings</b><p>Patterns and marks across the fur.</p></div>
+<div class="card"><b>Colors</b><p>The palette that defines each Wolf.</p></div>
+<div class="card"><b>Environment</b><p>The background and setting around it.</p></div>
+<div class="card"><b>Special elements</b><p>Unusual details that set a Wolf apart.</p></div></div>
+<div class="ph"><b>RARITY SYSTEM</b><p style="margin-top:6px">Official rarity classifications will be documented here when the final collection structure is announced.</p></div></section>
+
+<section id="s7"><div class="n">07</div><h2>Quests</h2>
+<p>Quests are activities that give Hunters a reason to return to the world of Loki and take part beyond simply owning an NFT.</p>
+<p>They are planned as part of how the ecosystem grows, covering exploration, activities, participation, and progression. Quests are a future feature and will expand as the project develops.</p>
+<p>The details are not final, so this section will be updated as each Quest is announced.</p></section>
+
+<section id="s8"><div class="n">08</div><h2>Marketplace</h2>
+<p>The Marketplace is where collectors discover and exchange assets from the Loki ecosystem, including Wolf NFTs and Loki Sigils.</p>
+<p>You can buy, sell, and collect, and ownership stays with you. This is the secondary market for the collection, and it gives collectors a place to find the Wolf or Sigil they want.</p>
+<p>Specific marketplace mechanics will be documented when they are confirmed.</p></section>
+
+<section id="s9"><div class="n">09</div><h2>The Reveal</h2>
+<p>The collection begins unrevealed. Before the reveal, NFTs stay mysterious: the final Wolf is not fully visible and collectors do not know exactly which Wolf they will receive.</p>
+<p>After the reveal, the Wolf artwork becomes visible, rarity and traits can be discovered, and each NFT becomes part of the revealed collection.</p>
+<div class="quote">The reveal is where mystery turns into discovery.</div>
+<p>It exists for anticipation and discovery, and to carry the Sigil and Summon mystery into the Wolf collection. Reveal timing will be announced on official channels.</p></section>
+
+<section id="s10"><div class="n">10</div><h2>Roadmap</h2>
+<div class="grid">
+<div class="card"><small>PHASE I</small><b>The Awakening</b><p>NFT Mint, Unrevealed Collection, Reveal Begins, Loki's World Opens.</p></div>
+<div class="card"><small>PHASE II</small><b>The Hunt</b><p>Wolf Summon, Rarity System, Collection Marketplace, Quests &amp; Activities.</p></div>
+<div class="card"><small>PHASE III</small><b>Rise of the Pack</b><p>Wolf Evolution, New Summon Content, Pack Features, More Coming Soon.</p></div></div>
+<h3 class="s">Phase I — The Awakening</h3>
+<p>The world opens. The collection mints and begins unrevealed, the reveal follows, and Loki's world opens to the first Hunters.</p>
+<h3 class="s">Phase II — The Hunt</h3>
+<p>The Hunt begins in earnest. Wolves are summoned, the rarity system takes shape, the marketplace opens for the collection, and Quests give Hunters things to do.</p>
+<h3 class="s">Phase III — Rise of the Pack</h3>
+<p>The world grows. Wolves can evolve, new Summon content arrives, and Pack features bring Hunters together, with more to come.</p>
+<p>Features may change as development continues. No dates are promised.</p></section>
+
+<section id="s11"><div class="n">11</div><h2>FAQ</h2>
+<details><summary>What is Loki The Wolf?</summary><p>A fantasy NFT collection built around a mysterious Wolf and the world of Loki.</p></details>
+<details><summary>What is Loki Sigil?</summary><p>A special NFT artifact that gives access to the Wolf Summon.</p></details>
+<details><summary>What does Loki Sigil do?</summary><p>It is the starting point of the journey and is used to begin a Summon.</p></details>
+<details><summary>How does Summon work?</summary><p>You own a Sigil, enter Summon, select it, initiate the ritual, and a Wolf awakens and is revealed. Exact mechanics are still being finalized.</p></details>
+<details><summary>What is a Wolf NFT?</summary><p>A collectible Wolf with its own visual identity, traits, and rarity.</p></details>
+<details><summary>Will the collection be revealed?</summary><p>Yes. It begins unrevealed and is revealed later. Timing will be announced officially.</p></details>
+<details><summary>What are Wolf rarities?</summary><p>Rarity classifies how uncommon a Wolf is. The official structure will be published here once it is final.</p></details>
+<details><summary>Can Wolves be traded?</summary><p>Yes. Wolves are NFTs and can be traded by collectors on the Marketplace.</p></details>
+<details><summary>What are Quests?</summary><p>Activities that give Hunters reasons to return to the world. They are a future feature.</p></details>
+<details><summary>Where can I find official updates?</summary><p>On X at @LokiTheWolfRH, and on the Info page.</p></details></section>
+
+</main>
+</div>
+<footer><b>LOKI THE WOLF</b><p>Enter the world. Awaken the Wolf.</p>
+<a class="btn" href="https://x.com/LokiTheWolfRH" target="_blank" rel="noopener noreferrer">X</a><a class="btn" href="https://opensea.io/collection/loki-the-wolf/overview" target="_blank" rel="noopener noreferrer">OpenSea</a><a class="btn" href="info.html">Info</a></footer>
+<script>
+document.getElementById('back').addEventListener('click',function(){window.location.href='info.html';});
+var nav=document.getElementById('nav'),links=[].slice.call(nav.querySelectorAll('a'));
+document.getElementById('menuBtn').addEventListener('click',function(){nav.classList.toggle('open');});
+links.forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'});nav.classList.remove('open');});});
+var secs=[].slice.call(document.querySelectorAll('section'));
+function spy(){var y=window.scrollY+130,cur=secs[0].id;secs.forEach(function(s){if(s.offsetTop<=y)cur=s.id;});links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+cur);});}
+window.addEventListener('scroll',spy,{passive:true});spy();
+</script>
+</body>
+</html>
